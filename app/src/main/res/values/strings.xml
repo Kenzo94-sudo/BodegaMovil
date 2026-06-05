@@ -44,4 +44,21 @@
     <string name="precio_inkachips">S/.3.20</string>
     <string name="precio_picaras">S/.2.50</string>
 
+
+    <string name="recuperar_contraseña">Recuperar Contraseña</string>
+    <string name="olvidaste_tu_contraseña">¿Olvidaste tu contraseña?</string>
+    <string name="acceder">Acceder</string>
+    <string name="ingrese_su_contrase_a">Ingrese su contraseña</string>
+    <string name="ingrese_su_usuario">Ingrese su usuario</string>
+    <string name="gestor_de_ventas">Gestor de Ventas</string>
+    <string name="minimarket">MiniMarket</string>
+
+    <string-array name="lista_categorias">
+    <item>Bebidas</item>
+    <item>Abarrotes</item>
+    <item>Golosinas</item>
+    <item>Verduras</item>
+    <item>Higiene Personal</item>
+    <item>Lacteos</item>
+    </string-array>
 </resources>
