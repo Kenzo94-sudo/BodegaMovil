@@ -239,7 +239,8 @@
             android:id="@+id/btnSalir"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Salir" />
+            android:text="Salir"
+            android:backgroundTint="@color/orange_red"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

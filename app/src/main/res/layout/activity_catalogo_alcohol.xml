@@ -333,10 +333,12 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAtras"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Atras"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:backgroundTint="@color/orange_red"/>
         </LinearLayout>
 
 

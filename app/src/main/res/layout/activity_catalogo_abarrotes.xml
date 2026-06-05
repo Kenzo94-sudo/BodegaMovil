@@ -76,7 +76,8 @@
                     android:layout_height="wrap_content"
                     android:text="Registrar"
                     android:textSize="15dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
@@ -327,16 +328,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/cv_bebidas_categoria"
+        app:layout_constraintTop_toBottomOf="@+id/cv_abarrote_categoria"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@id/btnAtras"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Atras"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:backgroundTint="@color/orange_red"/>
     </LinearLayout>
 
 

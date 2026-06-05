@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.appbodega.mobile.catalogo_snacks">
+    tools:context=".catalogo_bodega">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_snack"
@@ -338,10 +338,12 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAtras"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Atras"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:backgroundTint="@color/orange_red"/>
     </LinearLayout>
 
 
