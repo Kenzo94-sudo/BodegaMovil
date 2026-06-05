@@ -1,5 +1,6 @@
 package com.appbodega.app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,11 @@ class registro_ventas : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_registro_ventas)
+        btnAtras=findViewById(R.id.btnAtras)
+        btnAtras.setOnClickListener {
+            var intent= Intent(this, catalogo_bodega::class.java)
+            startActivity(intent)
+        }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
