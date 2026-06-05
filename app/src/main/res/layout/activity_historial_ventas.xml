@@ -16,12 +16,13 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+
             android:text="Historial de ventas"
             android:textColor="@color/white"
             android:textSize="18sp"
+            android:textAlignment="center"
             android:textStyle="bold"/>
 
     </LinearLayout>
@@ -66,7 +67,7 @@
                         android:padding="10dp"
                         android:drawablePadding="6dp"
                         android:background="@drawable/bg_field"
-                        android:drawableStart="@drawable/ic_calendar"/>
+                        />
 
                 </LinearLayout>
 
@@ -94,7 +95,7 @@
                         android:padding="10dp"
                         android:drawablePadding="6dp"
                         android:background="@drawable/bg_field"
-                        android:drawableStart="@drawable/ic_calendar"/>
+                        />
 
                 </LinearLayout>
 
