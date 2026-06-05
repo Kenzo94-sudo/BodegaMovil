@@ -12,12 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.Mobile">
         <activity
-            android:name=".registro_ventas"
-            android:exported="false" />
-        <activity
-            android:name=".registrar_producto"
-            android:exported="false" />
-        <activity
             android:name=".inicio_sesion"
             android:exported="true">
             <intent-filter>
@@ -26,6 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".registro_ventas"
+            android:exported="false" />
+        <activity
+            android:name=".registrar_producto"
+            android:exported="false" />
         <activity
             android:name=".registrar_snacks"
             android:exported="false" />

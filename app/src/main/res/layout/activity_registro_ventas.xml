@@ -79,14 +79,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Registrar"/>
+            android:text="Registrar"
+            android:backgroundTint="@color/orange_red"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCalcular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Calcular"/>
+            android:text="Calcular"
+            android:backgroundTint="@color/orange_red"/>
     </LinearLayout>
 
     <com.google.android.material.card.MaterialCardView
@@ -130,5 +132,6 @@
         android:layout_height="wrap_content"
         android:text="Atrás"
         android:layout_margin="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/orange_red"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
