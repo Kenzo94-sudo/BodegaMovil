@@ -19,6 +19,8 @@ class catalogo_bodega : AppCompatActivity() {
     private lateinit var iv_limpieza: ImageView
     private lateinit var ivcatalogo_bebidas: ImageView
 
+    private lateinit var btnregistro_ventas: MaterialButton
+
     private lateinit var btnSalir : MaterialButton
 
 
@@ -54,6 +56,12 @@ class catalogo_bodega : AppCompatActivity() {
         iv_alcohol = findViewById(R.id.iv_alcohol)
         iv_alcohol.setOnClickListener{
             var intent = Intent(this, catalogo_alcohol::class.java)
+            startActivity(intent)
+        }
+
+        btnregistro_ventas=findViewById(R.id.btnRegistroVentas)
+        btnregistro_ventas.setOnClickListener {
+            var intent= Intent(this, registro_ventas::class.java)
             startActivity(intent)
         }
 
