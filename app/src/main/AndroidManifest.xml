@@ -12,11 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.Mobile">
         <activity
+            android:name=".registro_ventas"
+            android:exported="false" />
+        <activity
             android:name=".registrar_producto"
             android:exported="false" />
         <activity
             android:name=".inicio_sesion"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".registrar_snacks"
             android:exported="false" />
@@ -34,13 +43,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false" />
     </application>
 
 </manifest>

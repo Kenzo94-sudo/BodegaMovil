@@ -54,11 +54,11 @@
     <string name="minimarket">MiniMarket</string>
 
     <string-array name="lista_categorias">
-    <item>Bebidas</item>
-    <item>Abarrotes</item>
-    <item>Golosinas</item>
-    <item>Verduras</item>
-    <item>Higiene Personal</item>
-    <item>Lacteos</item>
+        <item>Bebidas</item>
+        <item>Abarrotes</item>
+        <item>Golosinas</item>
+        <item>Verduras</item>
+        <item>Higiene Personal</item>
+        <item>Lacteos</item>
     </string-array>
 </resources>
