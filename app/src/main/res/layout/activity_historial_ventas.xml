@@ -10,15 +10,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:layout_marginTop="30dp"
         android:background="@color/orange_stronge"
         android:gravity="center_vertical"
         android:paddingHorizontal="16dp"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:textAlignment="center"
             android:text="Historial de ventas"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -307,11 +308,20 @@
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvVentas"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"/>
+                android:orientation="vertical">
+
+                <include layout="@layout/item_venta"/>
+
+                <include layout="@layout/item_venta"/>
+
+                <include layout="@layout/item_venta"/>
+
+                <include layout="@layout/item_venta"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
