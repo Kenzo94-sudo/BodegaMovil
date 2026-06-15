@@ -1,4 +1,4 @@
-package com.appbodega.mobile
+package com.appbodega.app
 
 import android.content.Intent
 import android.os.Bundle
