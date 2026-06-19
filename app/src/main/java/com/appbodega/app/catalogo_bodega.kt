@@ -20,6 +20,8 @@ class catalogo_bodega : AppCompatActivity() {
 
     private lateinit var btnSalir : MaterialButton
 
+    private lateinit var img_cerrar : ImageView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +66,12 @@ class catalogo_bodega : AppCompatActivity() {
 
         btnSalir = findViewById(R.id.btnSalir)
         btnSalir.setOnClickListener {
+            var intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        img_cerrar = findViewById(R.id.img_cerrar)
+        img_cerrar.setOnClickListener {
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
