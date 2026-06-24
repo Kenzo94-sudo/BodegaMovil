@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.Mobile">
-
+        <activity
+            android:name=".InicioActivity"
+            android:exported="false" />
         <activity
             android:name=".inicio_sesion"
             android:exported="true">
@@ -21,7 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".registro_ventas"
             android:exported="false" />
@@ -43,17 +44,18 @@
         <activity
             android:name=".catalogo_bodega"
             android:exported="false" />
-        <activity android:name=".catalogo_bebidas"
+        <activity
+            android:name=".catalogo_bebidas"
             android:exported="false" />
-        <activity android:name=".catalogo_snacks"
-            android:exported="false"/>
-
+        <activity
+            android:name=".catalogo_snacks"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".historial_ventas"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>

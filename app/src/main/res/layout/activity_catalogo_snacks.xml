@@ -76,14 +76,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Registrar"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:backgroundTint="@color/orange_red"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Eliminar"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:backgroundTint="@color/orange_red"/>
 
             </LinearLayout>
         </LinearLayout>
