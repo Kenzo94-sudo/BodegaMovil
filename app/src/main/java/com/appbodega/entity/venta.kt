@@ -1,4 +1,4 @@
-package com.appbodega.app
+package com.appbodega.entity
 
 data class venta(
     val codigo: String,
