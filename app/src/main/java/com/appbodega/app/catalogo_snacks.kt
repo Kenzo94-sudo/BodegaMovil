@@ -43,32 +43,7 @@ class catalogo_snacks : AppCompatActivity() {
         rvSnack.layoutManager = LinearLayoutManager(this)
 
 
-        val listaSnacks = listOf(
-            Producto(
-                nombre = "Doritos",
-                descripcion = "Tortilla de mazi con sabor a queso",
-                cantidad = 10,
-                precio = 2.50,
-                imagenResId = R.drawable.doritos1
-            ),
-            Producto(
-                nombre = "Inka Chips",
-                descripcion = "Snack de papas",
-                cantidad = 8,
-                precio = 3.20,
-                imagenResId = R.drawable.inkachips
-            ),
-            Producto(
-                nombre = "Picaras",
-                descripcion = "Galleta bañada en chocolate",
-                cantidad = 5,
-                precio = 2.50,
-                imagenResId = R.drawable.picaras
-            )
-        )
-
-        rvSnack.adapter = ProductoAdapter(listaSnacks)
-
+       //
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)

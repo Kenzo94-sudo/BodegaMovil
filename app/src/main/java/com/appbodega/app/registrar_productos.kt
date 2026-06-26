@@ -1,73 +1,116 @@
 package com.appbodega.app
 
-// Permite acceder al permiso de cámara (Manifest.permission.CAMERA)
 import android.Manifest
-// Tipo de dato que representa una imagen en memoria (la foto que toma la cámara)
+import android.content.Intent
 import android.graphics.Bitmap
-// Clase que contiene el estado guardado de la pantalla (por si se rota el dispositivo)
 import android.os.Bundle
-// Elemento visual que muestra imágenes en el layout
 import android.widget.ImageView
-// Muestra mensajes emergentes cortos en pantalla
+import android.widget.Spinner
 import android.widget.Toast
-// Extiende el contenido de la app hasta los bordes de la pantalla
-import androidx.activity.enableEdgeToEdge
-// Contiene los contratos predefinidos para pedir permisos y abrir la cámara
 import androidx.activity.result.contract.ActivityResultContracts
-// Clase base de todas las pantallas (Activities) en Android
 import androidx.appcompat.app.AppCompatActivity
-// Permite verificar si un permiso ya fue concedido
 import androidx.core.content.ContextCompat
-// Constante que representa "permiso concedido" (valor numérico 0)
-import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
-// Utilidad para escuchar los cambios en los márgenes del sistema (barra de estado, navegación)
-import androidx.core.view.ViewCompat
-// Representa los márgenes reservados por el sistema (barra de estado, barra de navegación)
-import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
+import java.io.ByteArrayOutputStream
 
 class registrar_productos : AppCompatActivity() {
 
-    // Variable que guardará la referencia al ImageView del layout
-    private lateinit var imagen_producto: ImageView
+    // Estas son las variables que identificamos en el diseño, para luego usarlos aqui
+    private lateinit var imagen: ImageView
+    private lateinit var etNombre: TextInputEditText
+    private lateinit var etCantidad: TextInputEditText
+    private lateinit var etPrecioCompra: TextInputEditText
+    private lateinit var etPrecioVenta: TextInputEditText
+    private lateinit var etDescripcion: TextInputEditText
+    private lateinit var spinnerCategorias: Spinner
+    private lateinit var btnRegistrar: MaterialButton
 
-    // Prepara la cámara y define qué hacer cuando el usuario tome una foto
-    private val abrirCamara =
-        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { foto: Bitmap? ->
-            // Si el usuario tomó una foto (no canceló), la muestra en el ImageView
-            foto?.let { imagen_producto.setImageBitmap(it) }
-        }
+    private var fotoProducto: Bitmap? = null // Guarda la foto tomada temporalmente
 
-    // Prepara el diálogo de permiso y define qué hacer según la respuesta del usuario
-    private val pedirPermiso =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { concedido ->
-            if (concedido) abrirCamara.launch(null) // Permiso aceptado → abre la cámara
-            else Toast.makeText(this, "Se necesita permiso de cámara", Toast.LENGTH_SHORT).show()
-        }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge() // Extiende el contenido hasta los bordes de la pantalla
-        setContentView(R.layout.activity_registrar_productos) // Carga el layout de esta pantalla
-
-        // Conecta la variable con el ImageView que está en el layout XML
-        imagen_producto = findViewById(R.id.imagen_producto)
-
-        // Cuando el usuario toque la imagen, verifica el permiso y abre la cámara
-        imagen_producto.setOnClickListener { verificarPermisoCamara() }
-
-        // Ajusta el padding para que el contenido no quede detrás de la barra de estado o navegación
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+    // Lanzador para abrir la cámara y recibir la foto de perfil del producto
+    private val camara = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { foto ->
+        if (foto != null) {
+            fotoProducto = foto
+            imagen.setImageBitmap(foto) // Muestra la foto en pantalla
         }
     }
 
-    private fun verificarPermisoCamara() {
-        // Revisa si la app ya tiene permiso de cámara
-        val permiso = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+    // Lanzador para pedir permiso de cámara al usuario
+    private val permiso = registerForActivityResult(ActivityResultContracts.RequestPermission()) { concedido ->
+        if (concedido) camara.launch(null)
+        else Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show()
+    }
 
-        if (permiso == PERMISSION_GRANTED) abrirCamara.launch(null) // Ya tiene permiso → abre la cámara
-        else pedirPermiso.launch(Manifest.permission.CAMERA)        // No tiene permiso → lo solicita
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_registrar_productos)
+
+        // Enlazar las variables con los IDs del archivo XML
+        imagen = findViewById(R.id.imagen_producto)
+        etNombre = findViewById(R.id.nombre_nuevo_producto)
+        etCantidad = findViewById(R.id.cantidad_nuevo_producto)
+        etPrecioCompra = findViewById(R.id.precio_compra_nuevo_producto)
+        etPrecioVenta = findViewById(R.id.precio_venta_nuevo_producto)
+        etDescripcion = findViewById(R.id.descripcion_nuevo_producto)
+        spinnerCategorias = findViewById(R.id.spinner_categorias)
+        btnRegistrar = findViewById(R.id.btnAcceder)
+
+        // Clic en la foto: revisa permisos y abre la cámara
+        imagen.setOnClickListener {
+            val tienePermiso = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            if (tienePermiso == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                camara.launch(null)
+            } else {
+                permiso.launch(Manifest.permission.CAMERA)
+            }
+        }
+
+        // Clic en el botón Registrar Producto
+        btnRegistrar.setOnClickListener {
+            GuardarDatos()
+        }
+    }
+
+    // Con esta funcion se guardan los datos escritos de los inputs en el obejeto producto
+    private fun GuardarDatos() {
+        val txtNombre = etNombre.text.toString()
+        val txtCantidad = etCantidad.text.toString()
+        val txtCompra = etPrecioCompra.text.toString()
+        val txtVenta = etPrecioVenta.text.toString()
+        val txtDesc = etDescripcion.text.toString()
+        val txtCat = spinnerCategorias.selectedItem?.toString() ?: ""
+
+        // Validación: Si falta algún campo obligatorio, frena el registro
+        if (txtNombre.isEmpty() || txtCantidad.isEmpty() || txtCompra.isEmpty() || txtVenta.isEmpty()) {
+            Toast.makeText(this, "Completa los campos obligatorios", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Convierte la foto (Bitmap) a un arreglo de bytes comprimido
+        var fotoEnBytes: ByteArray? = null
+        if (fotoProducto != null) {
+            val stream = ByteArrayOutputStream()
+            fotoProducto!!.compress(Bitmap.CompressFormat.JPEG, 70, stream) // 70% calidad para que no pese
+            fotoEnBytes = stream.toByteArray()
+        }
+
+        // Con esta funcion se guardan los datos escritos de los inputs en el obejeto producto
+        val nuevoProducto = Producto(
+            nombre = txtNombre,
+            descripcion = txtDesc,
+            cantidad = txtCantidad.toInt(),
+            categoria = txtCat,
+            precioCompra = txtCompra.toDouble(),
+            precioVenta = txtVenta.toDouble(),
+            imagenBytes = fotoEnBytes
+        )
+
+
+        val resultado = Intent()//Aqui se prepara el envio con el Intent
+        resultado.putExtra("NUEVO_PRODUCTO", nuevoProducto)//Se guarda el paquete con una nueva etiqueta
+
+        setResult(RESULT_OK, resultado) // Avisa que el registro tuvo exito
+        finish() // Cierra esta pantalla y regresa al catálogo
     }
 }
