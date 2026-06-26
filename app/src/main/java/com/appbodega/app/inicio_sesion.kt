@@ -14,10 +14,10 @@ class inicio_sesion : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_inicio_secion)
+        setContentView(R.layout.activity_inicio_sesion)
         btnAcceder= findViewById(R.id.btnAcceder)
         btnAcceder.setOnClickListener {
-            var intent = Intent(this, catalogo_bodega::class.java)
+            var intent = Intent(this, InicioActivity::class.java)
             startActivity(intent)
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

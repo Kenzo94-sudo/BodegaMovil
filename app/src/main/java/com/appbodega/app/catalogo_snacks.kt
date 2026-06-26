@@ -9,6 +9,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.appbodega.Adapter.ProductoAdapter
+import com.appbodega.entity.Producto
 import com.google.android.material.button.MaterialButton
 
 class catalogo_snacks : AppCompatActivity() {
@@ -19,17 +21,17 @@ class catalogo_snacks : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_catalogo_snacks)
+        setContentView(R.layout.fragment_catalogo_snacks)
 
         btnAtras=findViewById(R.id.btnAtras)
         btnAtras.setOnClickListener {
-            var intent= Intent(this, catalogo_bodega::class.java)
+            var intent= Intent(this, catalogoFragment::class.java)
             startActivity(intent)
         }
 
         img_cerrar = findViewById(R.id.img_cerrar)
         img_cerrar.setOnClickListener {
-            var intent = Intent(this, catalogo_bodega::class.java)
+            var intent = Intent(this, catalogoFragment::class.java)
             startActivity(intent)
         }
 

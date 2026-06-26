@@ -1,4 +1,4 @@
-package com.appbodega.app
+package com.appbodega.Adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.appbodega.entity.Producto
+import com.appbodega.app.R
 
 class ProductoAdapter(
     private val productos: List<Producto>

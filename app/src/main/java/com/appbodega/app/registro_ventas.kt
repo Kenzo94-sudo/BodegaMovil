@@ -20,7 +20,7 @@ class registro_ventas : AppCompatActivity() {
 
 
         btnAtras.setOnClickListener {
-            var intent= Intent(this, catalogo_bodega::class.java)
+            var intent= Intent(this, catalogoFragment::class.java)
             startActivity(intent)
         }
 

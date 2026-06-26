@@ -32,14 +32,16 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:src="@drawable/icon_menu"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="MissingConstraints" />
 
                     <ImageView
                         android:id="@+id/img_cerrar"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:src="@drawable/icon_close"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:ignore="MissingConstraints" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

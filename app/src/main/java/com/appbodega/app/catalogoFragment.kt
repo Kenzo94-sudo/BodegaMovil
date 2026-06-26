@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 
-class catalogo_bodega : AppCompatActivity() {
+class catalogoFragment : Fragment(R.layout.fragment_catalogo_bodega) {
 
     private lateinit var iv_snacks: ImageView
     private lateinit var iv_abarrotes: ImageView
@@ -22,11 +24,13 @@ class catalogo_bodega : AppCompatActivity() {
 
     private lateinit var img_cerrar : ImageView
 
+    private lateinit var img_menu : ImageView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_catalogo_bodega)
+        setContentView(R.layout.fragment_catalogo_bodega)
 
         iv_snacks = findViewById(R.id.iv_snacks)
         iv_snacks.setOnClickListener {
@@ -66,14 +70,19 @@ class catalogo_bodega : AppCompatActivity() {
 
         btnSalir = findViewById(R.id.btnSalir)
         btnSalir.setOnClickListener {
-            var intent = Intent(this, MainActivity::class.java)
+            var intent = Intent(this, inicio_sesion::class.java)
             startActivity(intent)
         }
 
         img_cerrar = findViewById(R.id.img_cerrar)
         img_cerrar.setOnClickListener {
-            var intent = Intent(this, MainActivity::class.java)
+            var intent = Intent(this, inicio_sesion::class.java)
             startActivity(intent)
+        }
+
+        img_menu = findViewById(R.id.img_menu)
+        img_menu.setOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

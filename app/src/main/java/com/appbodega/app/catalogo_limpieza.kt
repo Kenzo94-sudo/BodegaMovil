@@ -16,16 +16,16 @@ class catalogo_limpieza : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_catalogo_limpieza)
+        setContentView(R.layout.fragment_catalogo_limpieza)
         btnAtras=findViewById(R.id.btnAtras)
         btnAtras.setOnClickListener {
-            var intent= Intent(this, catalogo_bodega::class.java)
+            var intent= Intent(this, catalogoFragment::class.java)
             startActivity(intent)
         }
 
         img_cerrar = findViewById(R.id.img_cerrar)
         img_cerrar.setOnClickListener {
-            var intent = Intent(this, catalogo_bodega::class.java)
+            var intent = Intent(this, catalogoFragment::class.java)
             startActivity(intent)
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

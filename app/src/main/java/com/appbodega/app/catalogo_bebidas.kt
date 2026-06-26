@@ -7,8 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.appbodega.app.R
-import com.appbodega.app.catalogo_bodega
 import com.google.android.material.button.MaterialButton
 
 class catalogo_bebidas : AppCompatActivity() {
@@ -18,16 +16,16 @@ class catalogo_bebidas : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_catalogo_bebidas)
+        setContentView(R.layout.fragment_catalogo_bebidas)
         btnAtras= findViewById(R.id.btnAtras)
         btnAtras.setOnClickListener {
-            var intent= Intent(this, catalogo_bodega::class.java)
+            var intent= Intent(this, catalogoFragment::class.java)
             startActivity(intent)
         }
 
         img_cerrar = findViewById(R.id.img_cerrar)
         img_cerrar.setOnClickListener {
-            var intent = Intent(this, catalogo_bodega::class.java)
+            var intent = Intent(this, catalogoFragment::class.java)
             startActivity(intent)
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

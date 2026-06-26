@@ -42,7 +42,7 @@
             android:name=".catalogo_abarrotes"
             android:exported="false" />
         <activity
-            android:name=".catalogo_bodega"
+            android:name=".catalogoFragment"
             android:exported="false" />
         <activity
             android:name=".catalogo_bebidas"
