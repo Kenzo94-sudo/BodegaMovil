@@ -39,6 +39,7 @@
             >
 
             <TextView
+                android:id="@+id/tvNombreProducto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nombre_producto"
@@ -48,6 +49,7 @@
                 />
 
             <TextView
+                android:id="@+id/tvDescripcionProducto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/descripcion"
@@ -56,6 +58,7 @@
                 android:layout_marginBottom="5dp"/>
 
             <TextView
+                android:id="@+id/tvCantidadProducto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cantidad"
@@ -64,6 +67,7 @@
                 android:layout_marginBottom="5dp"/>
 
             <TextView
+                android:id="@+id/tvPrecioProducto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/precio"

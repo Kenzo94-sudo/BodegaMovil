@@ -7,13 +7,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.appbodega.app.R
-import com.appbodega.app.catalogo_bodega
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 
 class catalogo_snacks : AppCompatActivity() {
     private lateinit var  btnAtras: MaterialButton
     private lateinit var img_cerrar: ImageView
+    private lateinit var rvSnack: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +32,36 @@ class catalogo_snacks : AppCompatActivity() {
             var intent = Intent(this, catalogo_bodega::class.java)
             startActivity(intent)
         }
+
+        rvSnack = findViewById(R.id.rv_snack)
+        rvSnack.layoutManager = LinearLayoutManager(this)
+
+
+        val listaSnacks = listOf(
+            Producto(
+                nombre = "Doritos",
+                descripcion = "Tortilla de mazi con sabor a queso",
+                cantidad = 10,
+                precio = 2.50,
+                imagenResId = R.drawable.doritos1
+            ),
+            Producto(
+                nombre = "Inka Chips",
+                descripcion = "Snack de papas",
+                cantidad = 8,
+                precio = 3.20,
+                imagenResId = R.drawable.inkachips
+            ),
+            Producto(
+                nombre = "Picaras",
+                descripcion = "Galleta bañada en chocolate",
+                cantidad = 5,
+                precio = 2.50,
+                imagenResId = R.drawable.picaras
+            )
+        )
+
+        rvSnack.adapter = ProductoAdapter(listaSnacks)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
