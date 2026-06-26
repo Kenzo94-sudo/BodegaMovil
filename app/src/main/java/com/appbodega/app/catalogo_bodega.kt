@@ -7,8 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.appbodega.mobile.catalogo_bebidas
-import com.appbodega.mobile.catalogo_snacks
 import com.google.android.material.button.MaterialButton
 
 class catalogo_bodega : AppCompatActivity() {
@@ -17,9 +15,12 @@ class catalogo_bodega : AppCompatActivity() {
     private lateinit var iv_abarrotes: ImageView
     private lateinit var iv_alcohol: ImageView
     private lateinit var iv_limpieza: ImageView
-    private lateinit var ivcatalogo_bebidas: ImageView
+    private lateinit var iv_bebidas: ImageView
+    private lateinit var btnregistro_ventas: MaterialButton
 
     private lateinit var btnSalir : MaterialButton
+
+    private lateinit var img_cerrar : ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +34,8 @@ class catalogo_bodega : AppCompatActivity() {
             startActivity(intent)
         }
 
-        ivcatalogo_bebidas = findViewById(R.id.iv_bebidas)
-        ivcatalogo_bebidas.setOnClickListener {
+        iv_bebidas = findViewById(R.id.iv_bebidas)
+        iv_bebidas.setOnClickListener {
             var intent = Intent(this, catalogo_bebidas::class.java)
             startActivity(intent)
         }
@@ -57,8 +58,20 @@ class catalogo_bodega : AppCompatActivity() {
             startActivity(intent)
         }
 
+        btnregistro_ventas=findViewById(R.id.btnRegistroVentas)
+        btnregistro_ventas.setOnClickListener {
+            var intent= Intent(this, registro_ventas::class.java)
+            startActivity(intent)
+        }
+
         btnSalir = findViewById(R.id.btnSalir)
         btnSalir.setOnClickListener {
+            var intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        img_cerrar = findViewById(R.id.img_cerrar)
+        img_cerrar.setOnClickListener {
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }

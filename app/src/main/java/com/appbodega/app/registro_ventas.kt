@@ -2,30 +2,31 @@ package com.appbodega.app
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
 
-class catalogo_limpieza : AppCompatActivity() {
+class registro_ventas : AppCompatActivity() {
     private lateinit var btnAtras: MaterialButton
-    private lateinit var img_cerrar: ImageView
+    private lateinit var btnHistorialVentas: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_catalogo_limpieza)
+        setContentView(R.layout.activity_registro_ventas)
         btnAtras=findViewById(R.id.btnAtras)
+
+
         btnAtras.setOnClickListener {
             var intent= Intent(this, catalogo_bodega::class.java)
             startActivity(intent)
         }
 
-        img_cerrar = findViewById(R.id.img_cerrar)
-        img_cerrar.setOnClickListener {
-            var intent = Intent(this, catalogo_bodega::class.java)
+        btnHistorialVentas = findViewById(R.id.btnHistorialVentas)
+        btnHistorialVentas.setOnClickListener {
+            val intent = Intent(this, historial_ventas::class.java)
             startActivity(intent)
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

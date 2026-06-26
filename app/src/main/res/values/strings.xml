@@ -54,11 +54,13 @@
     <string name="minimarket">MiniMarket</string>
 
     <string-array name="lista_categorias">
-    <item>Bebidas</item>
-    <item>Abarrotes</item>
-    <item>Golosinas</item>
-    <item>Verduras</item>
-    <item>Higiene Personal</item>
-    <item>Lacteos</item>
+        <item>Bebidas</item>
+        <item>Abarrotes</item>
+        <item>Golosinas</item>
+        <item>Verduras</item>
+        <item>Higiene Personal</item>
+        <item>Lacteos</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -10,7 +10,7 @@
         android:bottomRightRadius="0dp" />
 
     <stroke
-        android:width="5dp"
+        android:width="0dp"
         android:color="@color/low_purple" />
 
 </shape>
