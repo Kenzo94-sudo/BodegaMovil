@@ -76,6 +76,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/btn_registro_limpieza"
                         android:text="Registrar"
                         android:textSize="15dp"
                         android:layout_weight="1"

@@ -75,6 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Registrar"
+                    android:id="@+id/btn_registro_abarrotes"
                     android:textSize="15dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/orange_red"

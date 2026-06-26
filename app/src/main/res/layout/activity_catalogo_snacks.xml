@@ -75,6 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:id="@+id/btn_registro_snacks"
                     android:text="Registrar"
                     android:textSize="15sp"
                     android:backgroundTint="@color/orange_red"/>

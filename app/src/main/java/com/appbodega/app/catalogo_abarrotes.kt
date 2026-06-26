@@ -11,6 +11,7 @@ import com.google.android.material.button.MaterialButton
 
 class catalogo_abarrotes : AppCompatActivity() {
     private lateinit var btnAtras: MaterialButton
+    private lateinit var btn_registro_abarrotes: MaterialButton
     private lateinit var img_cerrar: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +28,11 @@ class catalogo_abarrotes : AppCompatActivity() {
             var intent = Intent(this, catalogo_bodega::class.java)
             startActivity(intent)
         }
-
+        btn_registro_abarrotes=findViewById(R.id.btn_registro_abarrotes)
+        btn_registro_abarrotes.setOnClickListener {
+            var intent = Intent(this, registrar_productos::class.java)
+            startActivity(intent)
+        }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)

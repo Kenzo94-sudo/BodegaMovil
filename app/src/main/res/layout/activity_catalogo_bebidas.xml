@@ -80,6 +80,7 @@
                     android:layout_height="wrap_content"
                     android:text="Registrar"
                     android:textSize="15dp"
+                    android:id="@+id/btn_registro_bebidas"
                     android:layout_weight="1"
                     android:backgroundTint="@color/orange_red"/>
 

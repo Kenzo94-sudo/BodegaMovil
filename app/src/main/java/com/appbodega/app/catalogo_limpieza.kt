@@ -12,6 +12,7 @@ import com.google.android.material.button.MaterialButton
 class catalogo_limpieza : AppCompatActivity() {
     private lateinit var btnAtras: MaterialButton
     private lateinit var img_cerrar: ImageView
+    private lateinit var btn_registro_limpieza: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,11 @@ class catalogo_limpieza : AppCompatActivity() {
         img_cerrar = findViewById(R.id.img_cerrar)
         img_cerrar.setOnClickListener {
             var intent = Intent(this, catalogo_bodega::class.java)
+            startActivity(intent)
+        }
+        btn_registro_limpieza = findViewById(R.id.btn_registro_limpieza)
+        btn_registro_limpieza.setOnClickListener {
+            var intent = Intent(this, registrar_productos::class.java)
             startActivity(intent)
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

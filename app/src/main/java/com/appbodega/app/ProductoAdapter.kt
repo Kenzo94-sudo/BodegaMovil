@@ -32,7 +32,7 @@ class ProductoAdapter(
         holder.tvNombre.text = producto.nombre
         holder.tvDescripcion.text = producto.descripcion
         holder.tvCantidad.text = "Cantidad: ${producto.cantidad}"
-        holder.tvPrecio.text = "S/. ${producto.precio}"
+        holder.tvPrecio.text = "S/. ${producto.precioVenta}"
     }
 
     override fun getItemCount(): Int = productos.size
