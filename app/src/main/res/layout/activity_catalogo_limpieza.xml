@@ -148,6 +148,5 @@
                 android:backgroundTint="@color/orange_red"/>
         </LinearLayout>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 

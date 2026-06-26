@@ -1,6 +1,7 @@
 package com.appbodega.app
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -8,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.appbodega.entity.venta
+import com.google.android.material.button.MaterialButton
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -19,6 +21,7 @@ class historial_ventas : AppCompatActivity() {
     private lateinit var tvHasta: TextView
     private lateinit var tvTotalVentas: TextView
     private lateinit var tvTotalFiltrado: TextView
+    private lateinit var btnAtras: MaterialButton
 
     val ventas = listOf(
         venta("V001", "01/05/2025", 2, "Efectivo", "Abarrotes", 25.0),
@@ -35,6 +38,12 @@ class historial_ventas : AppCompatActivity() {
         tvHasta = findViewById(R.id.tvHasta)
         tvTotalVentas = findViewById(R.id.tvTotalVentas)
         tvTotalFiltrado = findViewById(R.id.tvTotalFiltrado)
+        btnAtras = findViewById(R.id.btnAtras)
+
+        btnAtras.setOnClickListener {
+            var intent = Intent(this, registro_ventas::class.java)
+            startActivity(intent)
+        }
 
         cargarMetodos()
 
