@@ -32,16 +32,14 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@drawable/icon_menu"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="MissingConstraints" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <ImageView
                     android:id="@+id/img_cerrar"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@drawable/icon_close"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="MissingConstraints" />
+                    app:layout_constraintEnd_toEndOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -76,20 +74,19 @@
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/orange_red"
                     android:text="Registrar"
                     android:textSize="15dp"
-                    tools:ignore="TextSizeCheck" />
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/orange_red"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/orange_red"
                     android:text="Eliminar"
                     android:textSize="15dp"
-                    tools:ignore="TextSizeCheck" />
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/orange_red"/>
 
             </LinearLayout>
         </LinearLayout>
