@@ -16,7 +16,7 @@ class catalogo_limpieza : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_catalogo_limpieza)
+        setContentView(R.layout.fragment_catalogo_limpieza)
         btnAtras=findViewById(R.id.btnAtras)
         btnAtras.setOnClickListener {
             var intent= Intent(this, catalogo_bodega::class.java)
