@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.appbodega.ui.CategoriasFragment
 import com.google.android.material.button.MaterialButton
 
 class registro_ventas : AppCompatActivity() {
@@ -20,8 +21,9 @@ class registro_ventas : AppCompatActivity() {
 
 
         btnAtras.setOnClickListener {
-            var intent= Intent(this, catalogoFragment::class.java)
-            startActivity(intent)
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.flayContenedor, CategoriasFragment())
+                .commit()
         }
 
         btnHistorialVentas = findViewById(R.id.btnHistorialVentas)

@@ -9,7 +9,8 @@ import com.appbodega.entity.Producto
 
 
 class ProductoAdapter(
-    private var productos: List<Producto> // Recibe la lista de productos
+
+private var productos: List<Producto> = emptyList()
 ) : RecyclerView.Adapter<ProductoViewHolder>() { //El recycler view avisa que trabajara junto al adaptador
     // Mapea los componentes visuales de cada fila (item_producto)
 
@@ -45,5 +46,4 @@ class ProductoAdapter(
         productos = data
         notifyDataSetChanged()
     }
-
 }

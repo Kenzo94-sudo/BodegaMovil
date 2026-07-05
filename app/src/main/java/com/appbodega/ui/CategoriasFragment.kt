@@ -7,16 +7,12 @@ import android.view.Menu
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appbodega.Adapter.CategoriaAdapter
-import com.appbodega.ui.BebidasFragment
-import com.appbodega.ui.LimpiezaFragment
-import com.appbodega.ui.SnacksFragment
-import com.appbodega.ui.AbarrotesFragment
-import com.appbodega.ui.AlcoholFragment
-import com.appbodega.ui.CategoriasFragment
 import com.appbodega.app.InicioActivity
 import com.appbodega.app.R
 import com.appbodega.provider.CategoriaProvider
@@ -25,9 +21,8 @@ import com.appbodega.provider.CategoriaProvider
 
 class CategoriasFragment : Fragment() {
 
-    private lateinit var btnMenu: ImageView
-
-    private lateinit var btnCerrar: ImageView
+    private lateinit var btnMenu: ImageButton
+    private lateinit var btnCerrar: ImageButton
     private lateinit var recyclerCategorias: RecyclerView
     private lateinit var adapter: CategoriaAdapter
 
@@ -52,7 +47,7 @@ class CategoriasFragment : Fragment() {
         }
 
         recyclerCategorias = view.findViewById(R.id.rvCategorias)
-        recyclerCategorias.layoutManager = GridLayoutManager(requireContext(), 2)
+        recyclerCategorias.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         adapter = CategoriaAdapter(CategoriaProvider.listaCategorias) { categoria ->
 
@@ -66,7 +61,7 @@ class CategoriasFragment : Fragment() {
             }
 
             parentFragmentManager.beginTransaction()
-                .replace(R.id.flayContenedor, fragment as Fragment)
+                .replace(R.id.flayContenedor, fragment)
                 .addToBackStack(null)
                 .commit()
         }
@@ -76,3 +71,4 @@ class CategoriasFragment : Fragment() {
         return view
     }
 }
+

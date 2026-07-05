@@ -2,10 +2,11 @@ package com.appbodega.provider
 
 import com.appbodega.app.R
 import com.appbodega.entity.Categoria
+import com.appbodega.entity.Producto
 
 object CategoriaProvider {
 
-    val listaCategorias = listOf(
+    val listaCategorias =  mutableListOf<Categoria>(
 
         Categoria(
             "Abarrotes",
@@ -29,12 +30,6 @@ object CategoriaProvider {
             "Limpieza",
             "Detergentes y desinfectantes",
             R.drawable.clean_cataloge
-        ),
-
-        Categoria(
-            "Lácteos",
-            "Leche, yogurt y queso",
-            R.drawable.milk_cataloge
         ),
 
         Categoria(

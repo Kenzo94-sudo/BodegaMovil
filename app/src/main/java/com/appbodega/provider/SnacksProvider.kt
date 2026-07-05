@@ -4,7 +4,7 @@ import com.appbodega.entity.Producto
 
 object SnacksProvider {
 
-    var lista = listOf(
+    val lista = mutableListOf<Producto>(
         Producto(
             nombre = "Doritos",
             descripcion = "Snack de maíz sabor queso",

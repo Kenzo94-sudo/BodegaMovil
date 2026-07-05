@@ -1,3 +1,4 @@
+/*
 package com.appbodega.app
 
 import android.Manifest
@@ -45,7 +46,7 @@ class registrar_productos : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_registrar_productos)
+        setContentView(R.layout.fragment_registrar_productos)
 
         // Enlazar las variables con los IDs del archivo XML
         imagen = findViewById(R.id.imagen_producto)
@@ -97,7 +98,7 @@ class registrar_productos : AppCompatActivity() {
         }
 
         // Con esta funcion se guardan los datos escritos de los inputs en el obejeto producto
-        val nuevoProducto = Productoo(
+        val nuevoProducto = Producto(
             nombre = txtNombre,
             descripcion = txtDesc,
             cantidad = txtCantidad.toInt(),
@@ -114,4 +115,4 @@ class registrar_productos : AppCompatActivity() {
         setResult(RESULT_OK, resultado) // Avisa que el registro tuvo exito
         finish() // Cierra esta pantalla y regresa al catálogo
     }
-}
+}*/

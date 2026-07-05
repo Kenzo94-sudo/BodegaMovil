@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".registrar_productos">
+    android:orientation="vertical">
 
 
     <ImageView
@@ -83,7 +82,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:entries="@array/lista_categorias" />
+                android:entries="@array/lista_categorias"
+                tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
 
     </LinearLayout>

@@ -1,3 +1,4 @@
+/*
 package com.appbodega.app
 
 import android.os.Bundle
@@ -19,4 +20,4 @@ class registrar_snacks : AppCompatActivity() {
             insets
         }
     }
-}
+}*/

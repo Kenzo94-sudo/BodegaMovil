@@ -1,42 +1,67 @@
 package com.appbodega.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.ImageButton
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appbodega.Adapter.ProductoAdapter
 import com.appbodega.app.R
+import com.appbodega.entity.Producto
 import com.appbodega.provider.AbarrotesProvider
+import com.google.android.material.button.MaterialButton
 
+class AbarrotesFragment : Fragment(R.layout.fragment_abarrotes) {
 
-class AbarrotesFragment : Fragment() {
+    private lateinit var recyclerProductos: RecyclerView
+    private lateinit var adapter: ProductoAdapter
+    private lateinit var btnRegistrarProducto: MaterialButton
+    private lateinit var btnBack : ImageButton
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    class AbarrotesFragment : Fragment(R.layout.fragment_abarrotes) {
+        btnBack = view.findViewById(R.id.btnBack)
+        recyclerProductos = view.findViewById(R.id.rvProductos)
+        btnRegistrarProducto = view.findViewById(R.id.btnRegistrarProducto)
 
-        private lateinit var recyclerProductos: RecyclerView
-        private lateinit var adapter: ProductoAdapter
+        // 1. Layout Manager
+        recyclerProductos.layoutManager =
+            LinearLayoutManager(requireContext())
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
+        // 2. Adapter con lista inicial SIEMPRE segura
+        adapter = ProductoAdapter(AbarrotesProvider.lista.toList())
+        recyclerProductos.adapter = adapter
 
-            recyclerProductos = view.findViewById(R.id.rvProductos)
+        // 3. Listener de resultados (ANTES de navegar no importa, se mantiene)
+        parentFragmentManager.setFragmentResultListener(
+            "nuevo_producto",
+            viewLifecycleOwner
+        ) { _, bundle ->
 
-            recyclerProductos.layoutManager =
-                LinearLayoutManager(requireContext())
+            val producto = bundle.getSerializable("producto") as Producto
 
-            adapter = ProductoAdapter(emptyList())
-            recyclerProductos.adapter = adapter
+            // Guardar en provider
+            AbarrotesProvider.lista.add(producto)
 
-            cargarProductos()
+            // Refrescar UI
+            adapter.actualizar(AbarrotesProvider.lista)
         }
 
-        private fun cargarProductos() {
-            val lista = AbarrotesProvider.lista
-            adapter.actualizar(lista)
+        // 4. Botón registrar
+        btnRegistrarProducto.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.flayContenedor, RegistrarProductoFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        // 5. Cargar inicial (solo una vez)
+        adapter.actualizar(AbarrotesProvider.lista)
+
+        btnBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
         }
     }
 }

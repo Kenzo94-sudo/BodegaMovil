@@ -4,7 +4,7 @@ import com.appbodega.entity.Producto
 
 object AlcoholProvider {
 
-    val lista = listOf(
+    val lista = mutableListOf<Producto>(
 
         Producto(
             nombre = "Cerveza Pilsen",
