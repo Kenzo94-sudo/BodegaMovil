@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tvTituloProductos" type="id" />
+    <item name="tilBuscarProducto" type="id" />
+    <item name="etBuscarProducto" type="id" />
+    <item name="item_categoria" type="id" />
+</resources>

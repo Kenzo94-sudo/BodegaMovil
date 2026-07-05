@@ -13,21 +13,16 @@ class CategoriaAdapter (
 
     private val lista: List<Categoria>,
     private val onClick: (Categoria) -> Unit )
-    : RecyclerView.Adapter<CategoriaAdapter.ViewHolder>()
+    : RecyclerView.Adapter<CategoriaViewHolder>()
     {
-        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val img = view.findViewById<ImageView>(R.id.imgCategoria)
-            val nombre = view.findViewById<TextView>(R.id.tvNombreCategoria)
-            val desc = view.findViewById<TextView>(R.id.tvDescripcion)
-        }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoriaViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_categoria, parent, false)
-            return ViewHolder(view)
+            return CategoriaViewHolder(view)
         }
 
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: CategoriaViewHolder, position: Int) {
             val item = lista[position]
 
             holder.nombre.text = item.nombre

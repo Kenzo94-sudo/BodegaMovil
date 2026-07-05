@@ -6,17 +6,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.appbodega.Adapter.ProductoViewHolder
+import com.appbodega.entity.Producto
+
 class ProductoAdapter(
     private val productos: List<Producto> // Recibe la lista de productos
-) : RecyclerView.Adapter<ProductoAdapter.ProductoViewHolder>() { //El recycler view avisa que trabajara junto al adaptador
+) : RecyclerView.Adapter<ProductoViewHolder>() { //El recycler view avisa que trabajara junto al adaptador
     // Mapea los componentes visuales de cada fila (item_producto)
-    class ProductoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imgProducto: ImageView = view.findViewById(R.id.img_producto)
-        val tvNombre: TextView = view.findViewById(R.id.tvNombreProducto)
-        val tvDescripcion: TextView = view.findViewById(R.id.tvDescripcionProducto)
-        val tvCantidad: TextView = view.findViewById(R.id.tvCantidadProducto)
-        val tvPrecio: TextView = view.findViewById(R.id.tvPrecioProducto)
-    }
+
     // 2. Infla el diseño XML de la fila
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ProductoViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_producto, parent, false)

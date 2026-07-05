@@ -1,37 +1,31 @@
 package com.appbodega.ui
 
 import android.R.attr.fragment
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appbodega.Adapter.CategoriaAdapter
 import com.appbodega.app.AbarroteFragment
 import com.appbodega.app.AlcoholFragment
 import com.appbodega.app.BebidaFragment
+import com.appbodega.app.InicioActivity
 import com.appbodega.app.LimpiezaFragment
 import com.appbodega.app.R
-import com.appbodega.app.catalogo_abarrotes
-import com.appbodega.app.catalogo_alcohol
-import com.appbodega.app.catalogo_bebidas
-import com.appbodega.app.catalogo_limpieza
-import com.appbodega.app.catalogo_snacks
-import com.appbodega.app.inicio_sesion
-import com.appbodega.app.registro_ventas
 import com.appbodega.provider.CategoriaProvider
-import com.google.android.material.button.MaterialButton
-import kotlin.jvm.java
 
 
-class fragment_categoria : Fragment() {
 
+class CategoriasFragment : Fragment() {
+
+    private lateinit var btnMenu: ImageView
+
+    private lateinit var btnCerrar: ImageView
     private lateinit var recyclerCategorias: RecyclerView
     private lateinit var adapter: CategoriaAdapter
 
@@ -40,27 +34,43 @@ class fragment_categoria : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         val view = inflater.inflate(R.layout.fragment_categoria_bodega, container, false)
+
+        btnMenu = view.findViewById(R.id.btnMenu)
+        btnCerrar = view.findViewById(R.id.btnCerrar)
+
+        btnMenu.setOnClickListener {
+            (activity as InicioActivity).abrirMenu()
+        }
+
+        btnCerrar.setOnClickListener {
+            requireActivity()
+                .finish()
+        }
+
         recyclerCategorias = view.findViewById(R.id.rvCategorias)
         recyclerCategorias.layoutManager = GridLayoutManager(requireContext(), 2)
+
         adapter = CategoriaAdapter(CategoriaProvider.listaCategorias) { categoria ->
 
-            val bundle = Bundle()
-            bundle.putString("categoria", categoria.nombre)
-
-            when (categoria.nombre) {
+            val fragment = when (categoria.nombre) {
                 "Abarrotes" -> AbarroteFragment()
                 "Alcohol" -> AlcoholFragment()
                 "Bebidas" -> BebidaFragment()
                 "Limpieza" -> LimpiezaFragment()
                 "Snacks" -> SnacksFragment()
-                else -> AbarroteFragment()
+                else -> CategoriasFragment()
             }
-            requireActivity().supportFragmentManager.beginTransaction()
+
+            parentFragmentManager.beginTransaction()
                 .replace(R.id.flayContenedor, fragment)
                 .addToBackStack(null)
                 .commit()
-
         }
+
+        recyclerCategorias.adapter = adapter
+
+        return view
     }
 }

@@ -10,6 +10,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.appbodega.ui.CategoriasFragment
 import com.google.android.material.navigation.NavigationView
 import kotlin.jvm.java
 
@@ -33,17 +34,24 @@ class InicioActivity : AppCompatActivity() {
         ivMenu.setOnClickListener { dlaymenu.openDrawer(GravityCompat.START) }
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.flayContenedor, catalogoFragment())
+            .replace(R.id.flayContenedor, CategoriasFragment())
             .commit()
 
         nvMenu.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.itInicio -> startActivity(Intent(this, MainActivity::class.java))
-                R.id.itCatalogo -> startActivity(Intent(this, catalogoFragment::class.java))
+                R.id.itInicio ->
+                    supportFragmentManager.beginTransaction()
+                    .replace(R.id.flayContenedor, CategoriasFragment())
+                    .commit()
+                R.id.itCatalogo ->
+                    supportFragmentManager.beginTransaction()
+                    .replace(R.id.flayContenedor, CategoriasFragment())
+                    .commit()
                 R.id.itHistorial -> startActivity(Intent(this, historial_ventas::class.java))
-                R.id.itCerrarSesion -> startActivity(Intent(this, MainActivity::class.java))
+                R.id.itCerrarSesion -> startActivity(Intent(this, inicio_sesion::class.java))
             }
-            dlaymenu.closeDrawers()
+
+            cerrarMenu()
             true
         }
 
@@ -55,4 +63,13 @@ class InicioActivity : AppCompatActivity() {
             insets
         }
     }
+
+    fun abrirMenu() {
+        dlaymenu.openDrawer(GravityCompat.START)
+    }
+
+    fun cerrarMenu() {
+        dlaymenu.closeDrawer(GravityCompat.START)
+    }
+
 }

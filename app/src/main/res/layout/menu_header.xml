@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="160dp"
     android:orientation="horizontal"
-    android:background="@color/low_purple">
+    android:background="@color/verde_principal">
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:src="@drawable/ic_casa"
         android:layout_marginHorizontal="24dp"
-        android:tint="@color/white"/>
+        app:tint="@color/white" />
 
     <TextView
         android:id="@+id/flayContenedor"

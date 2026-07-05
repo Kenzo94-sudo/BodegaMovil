@@ -1,82 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="25dp"
-    android:elevation="30dp"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp">
 
     <LinearLayout
-        android:id="@+id/item_base"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        app:cardCornerRadius="25dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="7"
-        android:background="@drawable/rounded_layout"
-        android:gravity="center"
-        >
+        android:padding="12dp">
 
         <ImageView
-            android:id="@+id/img_producto"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:src="@drawable/outline_add_a_photo_24"
-            android:clipToOutline="true"
-            android:scaleType="centerCrop"
-            android:background="@drawable/circle_imageview"
-            />
+            android:id="@+id/ivProducto"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_imagen"
+            android:scaleType="centerCrop"/>
 
         <LinearLayout
-            android:id="@+id/ll_item_producto"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_weight="4"
-            android:gravity="center_vertical"
-            >
+            android:paddingStart="10dp">
 
             <TextView
                 android:id="@+id/tvNombreProducto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/nombre_producto"
-                style="@style/clave_producto"
-                android:layout_gravity="start"
-                android:layout_marginBottom="5dp"
-                />
+                android:text="Producto"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tvPrecio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Precio:"
+                android:textColor="@color/verde_principal"/>
+
+            <TextView
+                android:id="@+id/tvStock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stock: "/>
 
             <TextView
                 android:id="@+id/tvDescripcionProducto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/descripcion"
-                style="@style/clave_producto"
-                android:layout_gravity="start"
-                android:layout_marginBottom="5dp"/>
-
-            <TextView
-                android:id="@+id/tvCantidadProducto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cantidad"
-                style="@style/clave_producto"
-                android:layout_gravity="start"
-                android:layout_marginBottom="5dp"/>
-
-            <TextView
-                android:id="@+id/tvPrecioProducto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/precio"
-                style="@style/clave_producto"
-                android:layout_gravity="start"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:text="Descripción: "/>
 
         </LinearLayout>
+
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
