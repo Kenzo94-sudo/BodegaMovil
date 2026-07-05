@@ -1,60 +1,34 @@
-package com.appbodega.ui
+package com.appbodega.app
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import com.appbodega.app.R
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.appbodega.Adapter.ProductoAdapter
+import com.appbodega.provider.BebidasProvider
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class BebidasFragment : Fragment(R.layout.fragment_abarrotes) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BebidasFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class BebidasFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var recyclerProductos: RecyclerView
+    private lateinit var adapter: ProductoAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recyclerProductos = view.findViewById(R.id.rvProductos)
+
+        recyclerProductos.layoutManager =
+            LinearLayoutManager(requireContext())
+
+        adapter = ProductoAdapter(emptyList())
+        recyclerProductos.adapter = adapter
+
+        cargarProductos()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bebidas, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BebidasFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BebidasFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun cargarProductos() {
+        val lista = BebidasProvider.lista
+        adapter.actualizar(lista)
     }
 }

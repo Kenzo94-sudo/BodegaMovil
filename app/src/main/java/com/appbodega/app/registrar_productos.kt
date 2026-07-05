@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.appbodega.entity.Producto
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import java.io.ByteArrayOutputStream
@@ -96,7 +97,7 @@ class registrar_productos : AppCompatActivity() {
         }
 
         // Con esta funcion se guardan los datos escritos de los inputs en el obejeto producto
-        val nuevoProducto = Producto(
+        val nuevoProducto = Productoo(
             nombre = txtNombre,
             descripcion = txtDesc,
             cantidad = txtCantidad.toInt(),

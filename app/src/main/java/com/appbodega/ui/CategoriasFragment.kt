@@ -11,11 +11,13 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appbodega.Adapter.CategoriaAdapter
-import com.appbodega.app.AbarroteFragment
-import com.appbodega.app.AlcoholFragment
-import com.appbodega.app.BebidaFragment
+import com.appbodega.ui.BebidasFragment
+import com.appbodega.ui.LimpiezaFragment
+import com.appbodega.ui.SnacksFragment
+import com.appbodega.ui.AbarrotesFragment
+import com.appbodega.ui.AlcoholFragment
+import com.appbodega.ui.CategoriasFragment
 import com.appbodega.app.InicioActivity
-import com.appbodega.app.LimpiezaFragment
 import com.appbodega.app.R
 import com.appbodega.provider.CategoriaProvider
 
@@ -55,16 +57,16 @@ class CategoriasFragment : Fragment() {
         adapter = CategoriaAdapter(CategoriaProvider.listaCategorias) { categoria ->
 
             val fragment = when (categoria.nombre) {
-                "Abarrotes" -> AbarroteFragment()
+                "Abarrotes" -> AbarrotesFragment()
                 "Alcohol" -> AlcoholFragment()
-                "Bebidas" -> BebidaFragment()
+                "Bebidas" -> BebidasFragment()
                 "Limpieza" -> LimpiezaFragment()
                 "Snacks" -> SnacksFragment()
                 else -> CategoriasFragment()
             }
 
             parentFragmentManager.beginTransaction()
-                .replace(R.id.flayContenedor, fragment)
+                .replace(R.id.flayContenedor, fragment as Fragment)
                 .addToBackStack(null)
                 .commit()
         }

@@ -1,16 +1,15 @@
-package com.appbodega.app
+package com.appbodega.Adapter
+
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.appbodega.Adapter.ProductoViewHolder
+import com.appbodega.app.R
 import com.appbodega.entity.Producto
 
+
 class ProductoAdapter(
-    private val productos: List<Producto> // Recibe la lista de productos
+    private var productos: List<Producto> // Recibe la lista de productos
 ) : RecyclerView.Adapter<ProductoViewHolder>() { //El recycler view avisa que trabajara junto al adaptador
     // Mapea los componentes visuales de cada fila (item_producto)
 
@@ -41,4 +40,10 @@ class ProductoAdapter(
 
     // 4. Dice cuántos productos hay en total
     override fun getItemCount(): Int = productos.size
+
+    fun actualizar(data: List<Producto>) {
+        productos = data
+        notifyDataSetChanged()
+    }
+
 }
