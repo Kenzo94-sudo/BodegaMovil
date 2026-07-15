@@ -3,38 +3,47 @@ package com.appbodega.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appbodega.Adapter.ProductoAdapter
 import com.appbodega.app.R
 import com.appbodega.entity.Producto
-import com.appbodega.provider.AbarrotesProvider
-import com.appbodega.provider.AlcoholProvider
-import com.appbodega.provider.BebidasProvider
-import com.appbodega.provider.LimpiezaProvider
+import com.appbodega.repository.ProductoRepository
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 
 class LimpiezaFragment : Fragment(R.layout.fragment_limpieza) {
     private lateinit var recyclerProductos: RecyclerView
     private lateinit var adapter: ProductoAdapter
     private lateinit var btnRegistrarProducto: MaterialButton
     private lateinit var btnBack : ImageButton
+    private lateinit var etBuscar: TextInputEditText
+
+    private lateinit var productoRepository: ProductoRepository
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        productoRepository = ProductoRepository(requireContext())
         btnBack = view.findViewById(R.id.btnBack)
         recyclerProductos = view.findViewById(R.id.rvProductos)
         btnRegistrarProducto = view.findViewById(R.id.btnRegistrarProducto)
+        etBuscar = view.findViewById(R.id.etBuscar)
 
         // 1. Layout Manager
         recyclerProductos.layoutManager =
             LinearLayoutManager(requireContext())
 
-        // 2. Adapter con lista inicial SIEMPRE segura
-        adapter = ProductoAdapter(LimpiezaProvider.lista.toList())
+        // guardado en BD lista
+        adapter = ProductoAdapter(productoRepository.listarPorCategoria("Limpieza"))
         recyclerProductos.adapter = adapter
+
+        etBuscar.addTextChangedListener { texto ->
+            val filtrados = productoRepository.buscarPorNombre(texto.toString(), "Limpieza")
+            adapter.actualizar(filtrados)
+        }
 
         // 3. Listener de resultados (ANTES de navegar no importa, se mantiene)
         parentFragmentManager.setFragmentResultListener(
@@ -44,11 +53,13 @@ class LimpiezaFragment : Fragment(R.layout.fragment_limpieza) {
 
             val producto = bundle.getSerializable("producto") as Producto
 
-            // Guardar en provider
-            LimpiezaProvider.lista.add(producto)
+            // Guardar en SQLite
+            productoRepository.insertar(producto)
 
-            // Refrescar UI
-            adapter.actualizar(LimpiezaProvider.lista)
+            val filtroActual = etBuscar.text.toString()
+            adapter.actualizar(
+                productoRepository.buscarPorNombre(filtroActual, "Limpieza")
+            )
         }
 
         // 4. Botón registrar
@@ -58,9 +69,6 @@ class LimpiezaFragment : Fragment(R.layout.fragment_limpieza) {
                 .addToBackStack(null)
                 .commit()
         }
-
-        // 5. Cargar inicial (solo una vez)
-        adapter.actualizar(LimpiezaProvider.lista)
 
         btnBack.setOnClickListener {
             parentFragmentManager.popBackStack()

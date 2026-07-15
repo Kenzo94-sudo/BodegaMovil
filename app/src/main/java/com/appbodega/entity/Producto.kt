@@ -1,6 +1,5 @@
 package com.appbodega.entity
 
-import android.graphics.Bitmap
 import java.io.Serializable
 
 data class Producto(
@@ -10,6 +9,7 @@ data class Producto(
     val categoria: String,
     val precioVenta: Double,
     val precioCompra: Double,
-    val imagenBytes: ByteArray? // se usa como un formato comprimido
+    val imagenBytes: ByteArray?, // se usa como un formato comprimido
                                 // y no sobre pase el excesivo peso de megas que podria ocupar
+    val id: Int = 0
 ) : Serializable // esto me permite convertir un objeto en datos para poder enviarlo entre pantallas o almacenarlo.

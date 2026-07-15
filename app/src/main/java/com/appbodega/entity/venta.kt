@@ -6,5 +6,7 @@ data class venta(
     val cantidad: Int,
     val metodo: String,
     val categoria: String,
-    val total: Double
+    val total: Double,
+    val id: Int = 0,
+    val productoId: Int = 0
 )

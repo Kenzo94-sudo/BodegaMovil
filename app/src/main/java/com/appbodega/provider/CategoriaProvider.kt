@@ -33,7 +33,7 @@ object CategoriaProvider {
         ),
 
         Categoria(
-            "Licores",
+            "Alcohol",
             "Cervezas, vinos y bebidas alcohólicas",
             R.drawable.beer_cataloge
         )
