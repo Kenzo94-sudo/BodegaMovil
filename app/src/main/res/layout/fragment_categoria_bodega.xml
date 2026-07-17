@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/orange_low">
+    android:background="@color/fondo_app">
 
     <!-- ================= HEADER ================= -->
 
@@ -42,7 +42,8 @@
                     android:layout_height="48dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/icon_menu"
-                    app:tint="@android:color/white"/>
+                    app:tint="@android:color/white"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <Space
                     android:layout_width="0dp"
@@ -55,7 +56,8 @@
                     android:layout_height="48dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/icon_close"
-                    app:tint="@android:color/white"/>
+                    app:tint="@android:color/white"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
             </LinearLayout>
 
@@ -127,46 +129,52 @@
         android:id="@+id/clBotonInferior"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/rvCategorias"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvCategorias">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegistrarProducto"
-            android:layout_width="0dp"
-            android:layout_height="58dp"
-            android:text="Registrar Producto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="5dp"
+            android:backgroundTint="@color/verde_principal"
+            android:text="Registrar Producto"
+            android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textStyle="bold"
-            android:textAllCaps="false"
-            android:backgroundTint="@color/verde_principal"
             app:cornerRadius="30dp"
             app:icon="@android:drawable/ic_menu_send"
             app:iconGravity="textStart"
             app:iconTint="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnRegistrarVenta"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvCategorias"
+            tools:ignore="NotSibling" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegistrarVenta"
-            android:layout_width="0dp"
-            android:layout_height="58dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
             android:text="Registrar Venta"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:textStyle="bold"
             android:textSize="15sp"
+            android:textStyle="bold"
             app:backgroundTint="@color/verde_principal"
             app:cornerRadius="30dp"
             app:icon="@android:drawable/ic_menu_send"
             app:iconGravity="textStart"
             app:iconTint="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintStart_toEndOf="@+id/btnRegistrarProducto"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

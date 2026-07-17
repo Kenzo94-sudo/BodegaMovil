@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,7 @@ import com.appbodega.Adapter.CategoriaAdapter
 import com.appbodega.app.InicioActivity
 import com.appbodega.app.R
 import com.appbodega.provider.CategoriaProvider
-
+import com.google.android.material.button.MaterialButton
 
 
 class CategoriasFragment : Fragment() {
@@ -25,6 +26,10 @@ class CategoriasFragment : Fragment() {
     private lateinit var btnCerrar: ImageButton
     private lateinit var recyclerCategorias: RecyclerView
     private lateinit var adapter: CategoriaAdapter
+
+    private lateinit var btnRegistrarProducto: MaterialButton
+
+    private lateinit var btnRegistrarVenta: MaterialButton
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +41,16 @@ class CategoriasFragment : Fragment() {
 
         btnMenu = view.findViewById(R.id.btnMenu)
         btnCerrar = view.findViewById(R.id.btnCerrar)
+        btnRegistrarProducto = view.findViewById(R.id.btnRegistrarProducto)
+        btnRegistrarVenta = view.findViewById(R.id.btnRegistrarVenta)
+
+        btnRegistrarProducto.setOnClickListener {
+            val fragment = RegistrarProductoFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.flayContenedor, fragment) // flayContenedor es tu FrameLayout
+                .addToBackStack(null)
+                .commit()
+        }
 
         btnMenu.setOnClickListener {
             (activity as InicioActivity).abrirMenu()
@@ -43,7 +58,6 @@ class CategoriasFragment : Fragment() {
 
         btnCerrar.setOnClickListener {
             requireActivity()
-                .finish()
         }
 
         recyclerCategorias = view.findViewById(R.id.rvCategorias)
@@ -60,7 +74,7 @@ class CategoriasFragment : Fragment() {
                 else -> CategoriasFragment()
             }
 
-            parentFragmentManager.beginTransaction()
+            requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.flayContenedor, fragment)
                 .addToBackStack(null)
                 .commit()

@@ -17,7 +17,6 @@ import com.google.android.material.textfield.TextInputEditText
 class SnacksFragment : Fragment(R.layout.fragment_snacks) {
     private lateinit var recyclerProductos: RecyclerView
     private lateinit var adapter: ProductoAdapter
-    private lateinit var btnRegistrarProducto: MaterialButton
     private lateinit var btnBack : ImageButton
     private lateinit var etBuscar: TextInputEditText
 
@@ -29,7 +28,6 @@ class SnacksFragment : Fragment(R.layout.fragment_snacks) {
         productoRepository = ProductoRepository(requireContext())
         btnBack = view.findViewById(R.id.btnBack)
         recyclerProductos = view.findViewById(R.id.rvProductos)
-        btnRegistrarProducto = view.findViewById(R.id.btnRegistrarProducto)
         etBuscar = view.findViewById(R.id.etBuscar)
 
         // 1. Layout Manager
@@ -62,13 +60,6 @@ class SnacksFragment : Fragment(R.layout.fragment_snacks) {
             )
         }
 
-        // 4. Botón registrar
-        btnRegistrarProducto.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.flayContenedor, RegistrarProductoFragment())
-                .addToBackStack(null)
-                .commit()
-        }
 
         btnBack.setOnClickListener {
             parentFragmentManager.popBackStack()

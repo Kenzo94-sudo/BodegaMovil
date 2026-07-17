@@ -17,7 +17,6 @@ import com.google.android.material.textfield.TextInputEditText
 class LimpiezaFragment : Fragment(R.layout.fragment_limpieza) {
     private lateinit var recyclerProductos: RecyclerView
     private lateinit var adapter: ProductoAdapter
-    private lateinit var btnRegistrarProducto: MaterialButton
     private lateinit var btnBack : ImageButton
     private lateinit var etBuscar: TextInputEditText
 
@@ -29,7 +28,6 @@ class LimpiezaFragment : Fragment(R.layout.fragment_limpieza) {
         productoRepository = ProductoRepository(requireContext())
         btnBack = view.findViewById(R.id.btnBack)
         recyclerProductos = view.findViewById(R.id.rvProductos)
-        btnRegistrarProducto = view.findViewById(R.id.btnRegistrarProducto)
         etBuscar = view.findViewById(R.id.etBuscar)
 
         // 1. Layout Manager
@@ -60,14 +58,6 @@ class LimpiezaFragment : Fragment(R.layout.fragment_limpieza) {
             adapter.actualizar(
                 productoRepository.buscarPorNombre(filtroActual, "Limpieza")
             )
-        }
-
-        // 4. Botón registrar
-        btnRegistrarProducto.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.flayContenedor, RegistrarProductoFragment())
-                .addToBackStack(null)
-                .commit()
         }
 
         btnBack.setOnClickListener {

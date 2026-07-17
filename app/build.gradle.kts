@@ -47,9 +47,12 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.core.ktx)
     implementation(libs.play.services.maps3d)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
     implementation("com.google.mlkit:barcode-scanning:17.3.0")
     // Camera
     implementation("androidx.camera:camera-core: 1.4.1")

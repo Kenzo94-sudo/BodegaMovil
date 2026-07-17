@@ -29,6 +29,8 @@ class RegistrarProductoFragment : Fragment(R.layout.fragment_registrar_productos
     private lateinit var spinnerCategorias: Spinner
     private lateinit var btnRegistrar: MaterialButton
 
+    private lateinit var btnCancelar: MaterialButton
+
     private var fotoProducto: Bitmap? = null
 
     private val camara =
@@ -59,6 +61,9 @@ class RegistrarProductoFragment : Fragment(R.layout.fragment_registrar_productos
         etDescripcion = view.findViewById(R.id.descripcion_nuevo_producto)
         spinnerCategorias = view.findViewById(R.id.spinner_categorias)
         btnRegistrar = view.findViewById(R.id.btnAcceder)
+        btnCancelar = view.findViewById(R.id.btnCancelar)
+
+
 
         imagen.setOnClickListener {
             val permisoCamara = ContextCompat.checkSelfPermission(
@@ -76,6 +81,11 @@ class RegistrarProductoFragment : Fragment(R.layout.fragment_registrar_productos
         btnRegistrar.setOnClickListener {
             guardarDatos()
         }
+
+        btnCancelar.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+
     }
 
     private fun guardarDatos() {

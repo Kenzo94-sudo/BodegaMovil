@@ -18,7 +18,7 @@ class AbarrotesFragment : Fragment(R.layout.fragment_abarrotes) {
 
     private lateinit var recyclerProductos: RecyclerView
     private lateinit var adapter: ProductoAdapter
-    private lateinit var btnRegistrarProducto: MaterialButton
+
     private lateinit var btnBack : ImageButton
     private lateinit var etBuscar: TextInputEditText
 
@@ -31,7 +31,6 @@ class AbarrotesFragment : Fragment(R.layout.fragment_abarrotes) {
         productoRepository = ProductoRepository(requireContext())
         btnBack = view.findViewById(R.id.btnBack)
         recyclerProductos = view.findViewById(R.id.rvProductos)
-        btnRegistrarProducto = view.findViewById(R.id.btnRegistrarProducto)
         etBuscar = view.findViewById(R.id.etBuscar)
 
         // 1. Layout Manager
@@ -65,15 +64,6 @@ class AbarrotesFragment : Fragment(R.layout.fragment_abarrotes) {
                 productoRepository.buscarPorNombre(filtroActual, "Abarrotes")
             )
         }
-
-        // 4. Botón registrar
-        btnRegistrarProducto.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.flayContenedor, RegistrarProductoFragment())
-                .addToBackStack(null)
-                .commit()
-        }
-
 
         btnBack.setOnClickListener {
             parentFragmentManager.popBackStack()
