@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.Mobile">
         <activity
-            android:name=".registrar_productos"
+            android:name=".registro_productos"
             android:exported="false" />
         <activity
             android:name=".InicioActivity"
