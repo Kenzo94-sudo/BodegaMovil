@@ -4,4 +4,5 @@
     <item name="tilBuscarProducto" type="id" />
     <item name="etBuscarProducto" type="id" />
     <item name="item_categoria" type="id" />
+    <item name="btnEliminar" type="id" />
 </resources>

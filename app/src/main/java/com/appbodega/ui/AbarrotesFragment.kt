@@ -3,6 +3,7 @@ package com.appbodega.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,7 +38,23 @@ class AbarrotesFragment : Fragment(R.layout.fragment_abarrotes) {
         btnBack = view.findViewById(R.id.btnBack)
         recyclerProductos = view.findViewById(R.id.rvProductos)
         etBuscar = view.findViewById(R.id.etBuscar)
-        adapter = ProductoAdapter(listaProductos)
+        adapter = ProductoAdapter(
+            listaProductos, {producto ->
+                val fragment = EditarProductoFragment()
+                val bundle = Bundle()
+                bundle.putSerializable(
+                    "producto", producto
+                )
+                fragment.arguments = bundle
+                parentFragmentManager.beginTransaction()
+                    .replace( R.id.fragment_container,
+                                fragment)
+                    .addToBackStack(null)
+                    .commit()
+            },{ producto ->
+                eliminarProducto(producto.id)
+             }
+        )
         recyclerProductos.layoutManager =
         LinearLayoutManager(requireContext())
         recyclerProductos.adapter = adapter
@@ -64,7 +81,6 @@ class AbarrotesFragment : Fragment(R.layout.fragment_abarrotes) {
                 ) {
                     listaProductos.clear()
                     for (item in snapshot.children) {
-                        79
                         val producto =
                         item.getValue(
                                     Producto::class.java
@@ -73,9 +89,7 @@ class AbarrotesFragment : Fragment(R.layout.fragment_abarrotes) {
                             producto != null &&
                         producto.categoria == "Abarrotes"
                         ) {
-                            89
                             listaProductos.add(producto)
-                            90
                         }
                     }
                     adapter.actualizar(listaProductos)
@@ -86,6 +100,45 @@ class AbarrotesFragment : Fragment(R.layout.fragment_abarrotes) {
 
                 }
             })
+    }
+
+    private fun eliminarProducto(idProducto: String) {
+        FirebaseDatabase.getInstance()
+            .getReference("productos")
+            .child(idProducto)
+            .removeValue()
+            .addOnSuccessListener {
+                Toast.makeText(
+                    requireContext(),
+                    "Producto eliminado",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(
+                    requireContext(),
+                    e.message,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+    }
+
+    private fun actualizarProducto(producto: Producto) {
+
+        FirebaseDatabase.getInstance()
+            .getReference("productos")
+            .child(producto.id)
+            .setValue(producto)
+            .addOnSuccessListener {
+
+                Toast.makeText(
+                    requireContext(),
+                    "Producto actualizado",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                parentFragmentManager.popBackStack()
+            }
     }
 }
 //

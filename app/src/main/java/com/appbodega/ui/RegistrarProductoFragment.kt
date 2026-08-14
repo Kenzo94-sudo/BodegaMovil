@@ -160,21 +160,15 @@ class RegistrarProductoFragment :
 
         var fotoBytes: ByteArray? = null
 
-        fotoProducto?.let {
-            val stream = ByteArrayOutputStream()
-            it.compress(
-                Bitmap.CompressFormat.JPEG,
-                70, stream
-            )
+        fotoProducto?.let { val stream = ByteArrayOutputStream()
+            it.compress( Bitmap.CompressFormat.JPEG,
+                70, stream )
             fotoBytes = stream.toByteArray()
         }
 
         var imagenBase64 = ""
-        fotoBytes?.let {
-            imagenBase64 = Base64.encodeToString(
-                it,
-                Base64.DEFAULT
-            )
+        fotoBytes?.let { imagenBase64 = Base64.encodeToString(
+                it, Base64.DEFAULT )
         }
 
         val idProducto = UUID.randomUUID().toString()
@@ -195,7 +189,6 @@ class RegistrarProductoFragment :
             .child(idProducto)
             .setValue(nuevoProducto)
             .addOnSuccessListener {
-
                 Toast.makeText(
                     requireContext(),
                     "Producto registrado correctamente",
@@ -205,7 +198,6 @@ class RegistrarProductoFragment :
                 limpiarCampos()
             }
             .addOnFailureListener { e ->
-
                 Toast.makeText(
                     requireContext(),
                     e.message,

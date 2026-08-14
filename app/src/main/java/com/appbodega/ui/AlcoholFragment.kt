@@ -3,6 +3,7 @@ package com.appbodega.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,26 +36,20 @@ class AlcoholFragment : Fragment(R.layout.fragment_alcohol) {
         btnBack = view.findViewById(R.id.btnBack)
         recyclerProductos = view.findViewById(R.id.rvProductos)
         etBuscar = view.findViewById(R.id.etBuscar)
-
-        adapter = ProductoAdapter(listaProductos)
-
-        recyclerProductos.layoutManager =
-            LinearLayoutManager(requireContext())
+        adapter = ProductoAdapter(
+            listaProductos) { producto -> eliminarProducto(producto.id)}
+        recyclerProductos.layoutManager = LinearLayoutManager(requireContext())
 
         recyclerProductos.adapter = adapter
 
         cargarProductos()
-
         etBuscar.addTextChangedListener { texto ->
-
             val filtrados = listaProductos.filter {
-
                 it.nombre.contains(
                     texto.toString(),
                     ignoreCase = true
                 )
             }
-
             adapter.actualizar(filtrados)
         }
 
@@ -93,5 +88,44 @@ class AlcoholFragment : Fragment(R.layout.fragment_alcohol) {
 
                 }
             })
+    }
+
+    private fun eliminarProducto(idProducto: String) {
+        FirebaseDatabase.getInstance()
+            .getReference("productos")
+            .child(idProducto)
+            .removeValue()
+            .addOnSuccessListener {
+                Toast.makeText(
+                    requireContext(),
+                    "Producto eliminado",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(
+                    requireContext(),
+                    e.message,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+    }
+
+    private fun actualizarProducto(producto: Producto) {
+
+        FirebaseDatabase.getInstance()
+            .getReference("productos")
+            .child(producto.id)
+            .setValue(producto)
+            .addOnSuccessListener {
+
+                Toast.makeText(
+                    requireContext(),
+                    "Producto actualizado",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                parentFragmentManager.popBackStack()
+            }
     }
 }

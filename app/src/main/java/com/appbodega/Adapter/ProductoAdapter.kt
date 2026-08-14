@@ -11,9 +11,11 @@ import com.appbodega.entity.Producto
 
 class ProductoAdapter(
 
-private var productos: List<Producto> = emptyList()
-) : RecyclerView.Adapter<ProductoViewHolder>() { //El recycler view avisa que trabajara junto al adaptador
-    // Mapea los componentes visuales de cada fila (item_producto)
+            private var productos: List<Producto>,
+            private val onActualizar: (Producto) -> Unit,
+            private val onEliminar: (Producto) -> Unit
+        ) : RecyclerView.Adapter<ProductoViewHolder>() { //El recycler view avisa que trabajara junto al adaptador
+        // Mapea los componentes visuales de cada fila (item_producto)
 
     // 2. Infla el diseño XML de la fila
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ProductoViewHolder {
@@ -29,6 +31,11 @@ private var productos: List<Producto> = emptyList()
         holder.tvDescripcion.text = producto.descripcion
         holder.tvCantidad.text = "Cantidad: ${producto.cantidad}"
         holder.tvPrecio.text = "S/. ${producto.precioVenta}" // Muestra el precio de venta
+        holder.btnEliminar.setOnClickListener {
+            onEliminar(producto)}
+        holder.btnActualizar.setOnClickListener {
+            onActualizar(producto)
+        }
 
         // Convierte los bytes guardados de vuelta a una imagen visible
         if (producto.imagenBase64.isNotEmpty()) {

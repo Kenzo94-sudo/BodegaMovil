@@ -1,6 +1,7 @@
 package com.appbodega.Adapter
 
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -12,4 +13,6 @@ class ProductoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val tvDescripcion: TextView = view.findViewById(R.id.tvDescripcionProducto)
     val tvCantidad: TextView = view.findViewById(R.id.tvStock)
     val tvPrecio: TextView = view.findViewById(R.id.tvPrecio)
+    val btnEliminar: ImageButton = itemView.findViewById(R.id.btnEliminar)
+    val btnActualizar: ImageButton = itemView.findViewById(R.id.btnActualizar)
 }
