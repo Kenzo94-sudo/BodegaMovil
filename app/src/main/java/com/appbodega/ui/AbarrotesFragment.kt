@@ -47,8 +47,7 @@ class AbarrotesFragment : Fragment(R.layout.fragment_abarrotes) {
                 )
                 fragment.arguments = bundle
                 parentFragmentManager.beginTransaction()
-                    .replace( R.id.fragment_container,
-                                fragment)
+                    .replace( R.id.flayContenedor, fragment)
                     .addToBackStack(null)
                     .commit()
             },{ producto ->

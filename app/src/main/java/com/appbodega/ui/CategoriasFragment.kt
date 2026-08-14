@@ -1,6 +1,7 @@
 package com.appbodega.ui
 
 import android.R.attr.fragment
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.appbodega.Adapter.CategoriaAdapter
 import com.appbodega.app.InicioActivity
 import com.appbodega.app.R
+import com.appbodega.app.registro_ventas
 import com.appbodega.provider.CategoriaProvider
 import com.google.android.material.button.MaterialButton
 
@@ -52,6 +54,11 @@ class CategoriasFragment : Fragment() {
                 .commit()
         }
 
+        btnRegistrarVenta.setOnClickListener {
+            val intent = Intent(requireContext(), registro_ventas::class.java)
+            startActivity(intent)
+        }
+
         btnMenu.setOnClickListener {
             (activity as InicioActivity).abrirMenu()
         }
@@ -85,4 +92,3 @@ class CategoriasFragment : Fragment() {
         return view
     }
 }
-

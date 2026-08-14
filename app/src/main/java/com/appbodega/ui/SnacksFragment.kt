@@ -34,7 +34,14 @@ class SnacksFragment : Fragment(R.layout.fragment_snacks) {
         recyclerProductos = view.findViewById(R.id.rvProductos)
         etBuscar = view.findViewById(R.id.etBuscar)
         adapter = ProductoAdapter(
-            listaProductos) { producto -> eliminarProducto(producto.id)}
+            listaProductos,
+            { producto ->
+                Toast.makeText(requireContext(), "Editar: ${producto.nombre}", Toast.LENGTH_SHORT).show()
+            },
+            { producto ->
+                eliminarProducto(producto.id)
+            }
+        )
         recyclerProductos.layoutManager =
             LinearLayoutManager(requireContext())
         recyclerProductos.adapter = adapter

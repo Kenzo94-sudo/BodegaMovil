@@ -37,7 +37,18 @@ class LimpiezaFragment : Fragment(R.layout.fragment_limpieza) {
         recyclerProductos = view.findViewById(R.id.rvProductos)
         etBuscar = view.findViewById(R.id.etBuscar)
         adapter = ProductoAdapter(
-            listaProductos) { producto -> eliminarProducto(producto.id)}
+            listaProductos,
+            { producto ->
+                val fragment = EditarProductoFragment.newInstance(producto)
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.flayContenedor, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            },
+            { producto ->
+                eliminarProducto(producto.id)
+            }
+        )
         recyclerProductos.layoutManager =
             LinearLayoutManager(requireContext())
 
@@ -118,24 +129,6 @@ class LimpiezaFragment : Fragment(R.layout.fragment_limpieza) {
                     e.message,
                     Toast.LENGTH_LONG
                 ).show()
-            }
-    }
-
-    private fun actualizarProducto(producto: Producto) {
-
-        FirebaseDatabase.getInstance()
-            .getReference("productos")
-            .child(producto.id)
-            .setValue(producto)
-            .addOnSuccessListener {
-
-                Toast.makeText(
-                    requireContext(),
-                    "Producto actualizado",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                parentFragmentManager.popBackStack()
             }
     }
 

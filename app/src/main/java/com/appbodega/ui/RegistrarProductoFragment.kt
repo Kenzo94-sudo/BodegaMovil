@@ -1,6 +1,7 @@
 package com.appbodega.ui
 
 import android.Manifest
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
@@ -8,9 +9,11 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.appbodega.app.R
+import com.appbodega.app.RegistroProductoActivity
 import com.appbodega.entity.Producto
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -25,6 +28,8 @@ class RegistrarProductoFragment :
     Fragment(R.layout.fragment_registrar_productos) {
 
     private lateinit var imagen: ImageView
+    private lateinit var etCodigoBarras: TextInputEditText
+    private lateinit var btnEscanearCodigo: MaterialButton
     private lateinit var etNombre: TextInputEditText
     private lateinit var etCantidad: TextInputEditText
     private lateinit var etPrecioCompra: TextInputEditText
@@ -63,6 +68,23 @@ class RegistrarProductoFragment :
             }
         }
 
+    private val scannerLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                val codigo = result.data?.getStringExtra("codigo_escaneado")
+                if (!codigo.isNullOrEmpty()) {
+                    etCodigoBarras.setText(codigo)
+                    Toast.makeText(
+                        requireContext(),
+                        "Código asignado: $codigo",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?
@@ -70,6 +92,8 @@ class RegistrarProductoFragment :
         super.onViewCreated(view, savedInstanceState)
 
         imagen = view.findViewById(R.id.imagen_producto)
+        etCodigoBarras = view.findViewById(R.id.codigo_barras_nuevo_producto)
+        btnEscanearCodigo = view.findViewById(R.id.btnEscanearCodigo)
         etNombre = view.findViewById(R.id.nombre_nuevo_producto)
         etCantidad = view.findViewById(R.id.cantidad_nuevo_producto)
         etPrecioCompra = view.findViewById(R.id.precio_compra_nuevo_producto)
@@ -79,6 +103,11 @@ class RegistrarProductoFragment :
 
         btnRegistrar = view.findViewById(R.id.btnAcceder)
         btnCancelar = view.findViewById(R.id.btnCancelar)
+
+        btnEscanearCodigo.setOnClickListener {
+            val intent = Intent(requireContext(), RegistroProductoActivity::class.java)
+            scannerLauncher.launch(intent)
+        }
 
         imagen.setOnClickListener {
 
@@ -113,6 +142,9 @@ class RegistrarProductoFragment :
 
         val txtNombre =
             etNombre.text.toString().trim()
+
+        val txtCodigo =
+            etCodigoBarras.text.toString().trim()
 
         val txtCantidad =
             etCantidad.text.toString().trim()
@@ -168,20 +200,21 @@ class RegistrarProductoFragment :
 
         var imagenBase64 = ""
         fotoBytes?.let { imagenBase64 = Base64.encodeToString(
-                it, Base64.DEFAULT )
+            it, Base64.DEFAULT )
         }
 
         val idProducto = UUID.randomUUID().toString()
 
         val nuevoProducto = Producto(
-                    id = idProducto,
-                    nombre = txtNombre,
-                    descripcion = txtDesc,
-                    cantidad = cantidad,
-                    categoria = txtCat,
-                    precioCompra = compra,
-                    precioVenta = venta,
-                    imagenBase64 = imagenBase64
+            id = idProducto,
+            nombre = txtNombre,
+            descripcion = txtDesc,
+            cantidad = cantidad,
+            categoria = txtCat,
+            precioCompra = compra,
+            precioVenta = venta,
+            imagenBase64 = imagenBase64,
+            codigoBarras = txtCodigo
         )
         val db = FirebaseDatabase.getInstance().reference
 
@@ -209,6 +242,7 @@ class RegistrarProductoFragment :
     private fun limpiarCampos() {
 
         etNombre.setText("")
+        etCodigoBarras.setText("")
         etCantidad.setText("")
         etPrecioCompra.setText("")
         etPrecioVenta.setText("")

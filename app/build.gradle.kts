@@ -53,7 +53,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation("com.google.firebase:firebase-auth:23.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("com.google.firebase:firebase-database:21.0.0")
+    implementation("com.google.android.gms:play-services-auth:21.3.0")
     implementation("com.google.mlkit:barcode-scanning:17.3.0")
     // Camera
     implementation("androidx.camera:camera-core:1.4.1")

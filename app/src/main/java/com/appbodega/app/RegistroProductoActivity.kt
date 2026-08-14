@@ -1,6 +1,7 @@
 package com.appbodega.app
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.util.Size
 import androidx.activity.result.contract.ActivityResultContracts
@@ -105,6 +106,13 @@ class RegistroProductoActivity : AppCompatActivity() {
 
         binding.resultTextView.text =
             txt ?: "No se detectó código"
+
+        if (!txt.isNullOrEmpty()) {
+            val resultado = Intent()
+            resultado.putExtra("codigo_escaneado", txt)
+            setResult(RESULT_OK, resultado)
+            finish()
+        }
     }
 
     override fun onDestroy() {

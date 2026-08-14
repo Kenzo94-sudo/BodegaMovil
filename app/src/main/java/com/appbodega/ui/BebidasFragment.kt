@@ -37,7 +37,18 @@ class BebidasFragment : Fragment(R.layout.fragment_bebidas) {
         recyclerProductos = view.findViewById(R.id.rvProductos)
         etBuscar = view.findViewById(R.id.etBuscar)
         adapter = ProductoAdapter(
-            listaProductos) { producto -> eliminarProducto(producto.id)}
+            listaProductos,
+            { producto ->
+                val fragment = EditarProductoFragment.newInstance(producto)
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.flayContenedor, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            },
+            { producto ->
+                eliminarProducto(producto.id)
+            }
+        )
         recyclerProductos.layoutManager =
             LinearLayoutManager(requireContext())
 

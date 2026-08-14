@@ -9,5 +9,6 @@ data class Producto(
     var precioCompra: Double = 0.0,
     var precioVenta: Double = 0.0,
     var imagenBase64: String = "",
-    var id: String = ""
+    var id: String = "",
+    var codigoBarras: String = ""
 ) : Serializable //me permite convertir un objeto en datos para poder enviarlo entre pantallas o almacenarlo.
