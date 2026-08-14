@@ -12,7 +12,7 @@ object SnacksProvider {
             categoria = "Snacks",
             precioVenta = 3.50,
             precioCompra = 2.50,
-            imagenBytes = null
+            imagenBase64 = ""
         ),
 
         Producto(
@@ -22,7 +22,7 @@ object SnacksProvider {
             categoria = "Snacks",
             precioVenta = 3.20,
             precioCompra = 2.20,
-            imagenBytes = null
+            imagenBase64 = ""
         )
     )
 }

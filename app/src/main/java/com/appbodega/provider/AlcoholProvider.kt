@@ -13,7 +13,7 @@ object AlcoholProvider {
             categoria = "Alcohol",
             precioVenta = 5.00,
             precioCompra = 3.90,
-            imagenBytes = null
+            imagenBase64 = ""
         ),
 
         Producto(
@@ -23,7 +23,7 @@ object AlcoholProvider {
             categoria = "Alcohol",
             precioVenta = 7.50,
             precioCompra = 6.00,
-            imagenBytes = null
+            imagenBase64 = ""
         ),
 
         Producto(
@@ -33,7 +33,7 @@ object AlcoholProvider {
             categoria = "Alcohol",
             precioVenta = 18.00,
             precioCompra = 14.50,
-            imagenBytes = null
+            imagenBase64 = ""
         ),
 
         Producto(
@@ -43,7 +43,7 @@ object AlcoholProvider {
             categoria = "Alcohol",
             precioVenta = 25.00,
             precioCompra = 20.00,
-            imagenBytes = null
+            imagenBase64 = ""
         ),
 
         Producto(
@@ -53,7 +53,7 @@ object AlcoholProvider {
             categoria = "Alcohol",
             precioVenta = 95.00,
             precioCompra = 80.00,
-            imagenBytes = null
+            imagenBase64 = ""
         )
     )
 }

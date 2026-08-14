@@ -14,7 +14,7 @@ object LimpiezaProvider {
             categoria = "Limpieza",
             precioVenta = 8.50,
             precioCompra = 6.80,
-            imagenBytes = null
+            imagenBase64 = ""
         ),
 
         Producto(
@@ -24,7 +24,7 @@ object LimpiezaProvider {
             categoria = "Limpieza",
             precioVenta = 5.20,
             precioCompra = 3.90,
-            imagenBytes = null
+            imagenBase64 = ""
         ),
 
         Producto(
@@ -34,7 +34,7 @@ object LimpiezaProvider {
             categoria = "Limpieza",
             precioVenta = 7.00,
             precioCompra = 5.00,
-            imagenBytes = null
+            imagenBase64 = ""
         ),
 
         Producto(
@@ -44,7 +44,7 @@ object LimpiezaProvider {
             categoria = "Limpieza",
             precioVenta = 12.00,
             precioCompra = 9.00,
-            imagenBytes = null
+            imagenBase64 = ""
         ),
 
         Producto(
@@ -54,7 +54,7 @@ object LimpiezaProvider {
             categoria = "Limpieza",
             precioVenta = 6.50,
             precioCompra = 4.80,
-            imagenBytes = null
+            imagenBase64 = ""
         )
     )
 }

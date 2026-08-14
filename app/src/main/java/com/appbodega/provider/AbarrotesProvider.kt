@@ -13,7 +13,7 @@ object AbarrotesProvider {
             categoria = "Abarrotes",
             precioVenta = 4.50,
             precioCompra = 3.80,
-            imagenBytes = null
+            imagenBase64 = ""
         ),
 
         Producto(
@@ -23,7 +23,7 @@ object AbarrotesProvider {
             categoria = "Abarrotes",
             precioVenta = 3.80,
             precioCompra = 3.10,
-            imagenBytes = null
+            imagenBase64 = ""
         ),
 
         Producto(
@@ -33,7 +33,7 @@ object AbarrotesProvider {
             categoria = "Abarrotes",
             precioVenta = 2.20,
             precioCompra = 1.70,
-            imagenBytes = null
+            imagenBase64 = ""
         ),
 
         Producto(
@@ -43,7 +43,7 @@ object AbarrotesProvider {
             categoria = "Abarrotes",
             precioVenta = 9.50,
             precioCompra = 7.80,
-            imagenBytes = null
+            imagenBase64 = ""
         ),
 
         Producto(
@@ -53,7 +53,7 @@ object AbarrotesProvider {
             categoria = "Abarrotes",
             precioVenta = 1.50,
             precioCompra = 1.00,
-            imagenBytes = null
+            imagenBase64 = ""
         )
     )
 }

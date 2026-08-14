@@ -1,6 +1,7 @@
 package com.appbodega.Adapter
 
 import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -30,14 +31,17 @@ private var productos: List<Producto> = emptyList()
         holder.tvPrecio.text = "S/. ${producto.precioVenta}" // Muestra el precio de venta
 
         // Convierte los bytes guardados de vuelta a una imagen visible
-        val bytes = producto.imagenBytes
-        if (bytes != null && bytes.isNotEmpty()) {
-            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-            holder.imgProducto.setImageBitmap(bitmap)
-        } else {
-            holder.imgProducto.setImageResource(R.drawable.icono_camara) // Foto por defecto
-        }
-    }
+        if (producto.imagenBase64.isNotEmpty()) {
+            try {
+                val bytes = Base64.decode(producto.imagenBase64,Base64.DEFAULT)
+                val bitmap = BitmapFactory.decodeByteArray(
+                    bytes, 0, bytes.size)
+                holder.imgProducto.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+                holder.imgProducto.setImageResource(
+                    R.drawable.icono_camara)}
+        } else { holder.imgProducto.setImageResource(
+                R.drawable.icono_camara)}}
 
     // 4. Dice cuántos productos hay en total
     override fun getItemCount(): Int = productos.size

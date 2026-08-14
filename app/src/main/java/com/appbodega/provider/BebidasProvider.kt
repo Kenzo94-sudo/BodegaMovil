@@ -12,7 +12,7 @@ object BebidasProvider {
             categoria = "Bebidas",
             precioVenta = 3.50,
             precioCompra = 2.80,
-            imagenBytes = null
+            imagenBase64 = ""
         ),
 
         Producto(
@@ -22,7 +22,7 @@ object BebidasProvider {
             categoria = "Bebidas",
             precioVenta = 3.30,
             precioCompra = 2.70,
-            imagenBytes = null
+            imagenBase64 = ""
         )
     )
 }
