@@ -1,14 +1,15 @@
 package com.appbodega.Adapter
-
+import android.app.AlertDialog
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.appbodega.app.R
 import com.appbodega.entity.Producto
 
-
+private  val STOCK_MINIMO = 5
 class ProductoAdapter(
 
             private var productos: List<Producto>,
@@ -29,10 +30,35 @@ class ProductoAdapter(
 
         holder.tvNombre.text = producto.nombre
         holder.tvDescripcion.text = producto.descripcion
-        holder.tvCantidad.text = "Cantidad: ${producto.cantidad}"
         holder.tvPrecio.text = "S/. ${producto.precioVenta}" // Muestra el precio de venta
+
+        // Alerta de stock bajo:si el stock es bajo se pondra rojo
+        if (producto.cantidad < STOCK_MINIMO) {
+            holder.tvCantidad.text = "Cantidad: ${producto.cantidad} ⚠ Stock bajo"
+            holder.tvCantidad.setTextColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.red)
+            )
+        } else {
+            holder.tvCantidad.text = "Cantidad: ${producto.cantidad}"
+            holder.tvCantidad.setTextColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.texto_secundario)
+            )
+        }
+
         holder.btnEliminar.setOnClickListener {
-            onEliminar(producto)}
+            // Confirmación antes de eliminar el producto
+            AlertDialog.Builder(holder.itemView.context)
+                .setTitle("Eliminar producto")
+                .setMessage("¿Estas seguro que quieres eliminar \"${producto.nombre}\"? Esta accion no se puede deshacer.")
+                .setPositiveButton("Eliminar") { dialog, _ ->
+                    onEliminar(producto)
+                    dialog.dismiss()
+                }
+                .setNegativeButton("Cancelar") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
         holder.btnActualizar.setOnClickListener {
             onActualizar(producto)
         }
