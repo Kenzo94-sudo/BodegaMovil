@@ -15,4 +15,5 @@ class ProductoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val tvPrecio: TextView = view.findViewById(R.id.tvPrecio)
     val btnEliminar: ImageButton = itemView.findViewById(R.id.btnEliminar)
     val btnActualizar: ImageButton = itemView.findViewById(R.id.btnActualizar)
+    val btnverDetalle : ImageButton = itemView.findViewById(R.id.btnverDetalle)
 }

@@ -25,33 +25,50 @@ class SnacksFragment : Fragment(R.layout.fragment_snacks) {
     private lateinit var etBuscar: TextInputEditText
     private val listaProductos = mutableListOf<Producto>()
 
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?
-    ) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btnBack = view.findViewById(R.id.btnBack)
+
+        btnBack           = view.findViewById(R.id.btnBack)
         recyclerProductos = view.findViewById(R.id.rvProductos)
-        etBuscar = view.findViewById(R.id.etBuscar)
+        etBuscar          = view.findViewById(R.id.etBuscar)
+
         adapter = ProductoAdapter(
             listaProductos,
             { producto ->
-                Toast.makeText(requireContext(), "Editar: ${producto.nombre}", Toast.LENGTH_SHORT).show()
+                val fragment = DetalleProductoFragment()
+                val bundle = Bundle()
+                bundle.putString("productoId", producto.id)
+                fragment.arguments = bundle
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.flayContenedor, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            },
+            { producto ->
+                val fragment = EditarProductoFragment()
+                val bundle = Bundle()
+                bundle.putSerializable("producto", producto)
+                fragment.arguments = bundle
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.flayContenedor, fragment)
+                    .addToBackStack(null)
+                    .commit()
             },
             { producto ->
                 eliminarProducto(producto.id)
             }
         )
-        recyclerProductos.layoutManager =
-            LinearLayoutManager(requireContext())
+
+        recyclerProductos.layoutManager = LinearLayoutManager(requireContext())
         recyclerProductos.adapter = adapter
+
         cargarProductos()
+
         etBuscar.addTextChangedListener { texto ->
             val filtrados = listaProductos.filter {
-                it.nombre.contains(
-                    texto.toString(),
-                    ignoreCase = true
-                )
+                it.nombre.contains(texto.toString(), ignoreCase = true)
             }
             adapter.actualizar(filtrados)
         }
@@ -68,16 +85,14 @@ class SnacksFragment : Fragment(R.layout.fragment_snacks) {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     listaProductos.clear()
                     for (item in snapshot.children) {
-                        val producto =item.getValue(
-                                Producto::class.java)
+                        val producto = item.getValue(Producto::class.java)
                         if (producto != null && producto.categoria == "Snacks") {
                             listaProductos.add(producto)
                         }
                     }
                     adapter.actualizar(listaProductos)
                 }
-                override fun onCancelled(error: DatabaseError) {
-                }
+                override fun onCancelled(error: DatabaseError) {}
             })
     }
 
@@ -87,36 +102,10 @@ class SnacksFragment : Fragment(R.layout.fragment_snacks) {
             .child(idProducto)
             .removeValue()
             .addOnSuccessListener {
-                Toast.makeText(
-                    requireContext(),
-                    "Producto eliminado",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(requireContext(), "Producto eliminado", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(
-                    requireContext(),
-                    e.message,
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-    }
-
-    private fun actualizarProducto(producto: Producto) {
-
-        FirebaseDatabase.getInstance()
-            .getReference("productos")
-            .child(producto.id)
-            .setValue(producto)
-            .addOnSuccessListener {
-
-                Toast.makeText(
-                    requireContext(),
-                    "Producto actualizado",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                parentFragmentManager.popBackStack()
+                Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
             }
     }
 }

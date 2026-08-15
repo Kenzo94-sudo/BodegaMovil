@@ -56,11 +56,21 @@
                 android:layout_height="wrap_content"
                 android:text="Descripción: "/>
         </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center_vertical">
+
+            <ImageButton
+                android:id="@+id/btnverDetalle"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginBottom="6dp"
+                android:background="@android:color/background_light"
+                android:contentDescription="ver detalle"
+                android:padding="7dp"
+                android:src="@drawable/ic_verdetalle"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <ImageButton
                 android:id="@+id/btnEliminar"
@@ -68,12 +78,12 @@
                 android:layout_height="40dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                app:cornerRadius="120dp"
+                android:background="@drawable/icons8_trash_50"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
-                android:background="@drawable/icons8_trash_50"
                 android:scaleType="centerInside"
-                />
+                app:cornerRadius="120dp"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
             <ImageButton
                 android:id="@+id/btnActualizar"
@@ -82,13 +92,23 @@
                 android:background="@drawable/actualizar"
                 android:scaleType="centerInside"
                 app:layout_constraintTop_toBottomOf="@+id/btnEliminar"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
                 tools:layout_editor_absoluteX="6dp" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
-        </LinearLayout>
+    </LinearLayout>
 
 
 </com.google.android.material.card.MaterialCardView>

@@ -51,7 +51,7 @@
     <string name="ingrese_su_contrase_a">Ingrese su contraseña</string>
     <string name="ingrese_su_usuario">Ingrese su usuario</string>
     <string name="gestor_de_ventas">Gestor de Ventas</string>
-    <string name="minimarket">MiniMarket</string>
+    <string name="minimarket">BodeguitApp</string>
 
     <string-array name="lista_categorias">
         <item>Bebidas</item>

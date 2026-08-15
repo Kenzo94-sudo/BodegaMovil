@@ -39,20 +39,32 @@ class AbarrotesFragment : Fragment(R.layout.fragment_abarrotes) {
         recyclerProductos = view.findViewById(R.id.rvProductos)
         etBuscar = view.findViewById(R.id.etBuscar)
         adapter = ProductoAdapter(
-            listaProductos, {producto ->
-                val fragment = EditarProductoFragment()
+            listaProductos,
+            { producto ->
+                val fragment = DetalleProductoFragment()
                 val bundle = Bundle()
-                bundle.putSerializable(
-                    "producto", producto
-                )
+                bundle.putString("productoId", producto.id)
                 fragment.arguments = bundle
-                parentFragmentManager.beginTransaction()
-                    .replace( R.id.flayContenedor, fragment)
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.flayContenedor, fragment)
                     .addToBackStack(null)
                     .commit()
-            },{ producto ->
+            },
+            { producto ->
+                val fragment = EditarProductoFragment()
+                val bundle = Bundle()
+                bundle.putSerializable("producto", producto)
+                fragment.arguments = bundle
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.flayContenedor, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            },
+            { producto ->
                 eliminarProducto(producto.id)
-             }
+            }
         )
         recyclerProductos.layoutManager =
         LinearLayoutManager(requireContext())

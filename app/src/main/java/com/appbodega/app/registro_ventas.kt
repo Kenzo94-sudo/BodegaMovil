@@ -3,15 +3,10 @@ package com.appbodega.app
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Base64
-import android.widget.ArrayAdapter
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -34,31 +29,24 @@ class registro_ventas : AppCompatActivity() {
 
     private lateinit var toolbarVentas: MaterialToolbar
     private lateinit var tvCodigoGenerado: TextView
-
     private lateinit var btnAbrirCatalogoCategorias: MaterialButton
     private lateinit var btnEscanearVenta: MaterialButton
-
     private lateinit var spinnerCategoriasVenta: Spinner
     private lateinit var spinnerProductos: Spinner
-
     private lateinit var layoutInfoProducto: LinearLayout
-    private lateinit var imgProductoPreview: ImageView
+    private lateinit var imgProductoPreview: android.widget.ImageView
     private lateinit var tvNombreProductoSeleccionado: TextView
     private lateinit var tvCategoriaProductoSeleccionado: TextView
     private lateinit var tvStockProductoSeleccionado: TextView
     private lateinit var txtPrecioUnitario: TextView
-
     private lateinit var btnMenosCantidad: ImageButton
     private lateinit var txtCantidad: EditText
     private lateinit var btnMasCantidad: ImageButton
-
     private lateinit var spinnerMetodoPago: Spinner
     private lateinit var txtFechaVenta: TextView
-
     private lateinit var txtSubtotalCalculado: TextView
     private lateinit var txtIgvCalculado: TextView
     private lateinit var txtTotalCalculado: TextView
-
     private lateinit var btnRegistrarVenta: MaterialButton
     private lateinit var btnHistorialVentas: MaterialButton
 
@@ -81,90 +69,65 @@ class registro_ventas : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_registro_ventas)
 
-        toolbarVentas = findViewById(R.id.toolbarVentas)
-        tvCodigoGenerado = findViewById(R.id.tvCodigoGenerado)
-
+        toolbarVentas              = findViewById(R.id.toolbarVentas)
+        tvCodigoGenerado           = findViewById(R.id.tvCodigoGenerado)
         btnAbrirCatalogoCategorias = findViewById(R.id.btnAbrirCatalogoCategorias)
-        btnEscanearVenta = findViewById(R.id.btnEscanearVenta)
-
-        spinnerCategoriasVenta = findViewById(R.id.spinnerCategoriasVenta)
-        spinnerProductos = findViewById(R.id.spinnerProductos)
-
-        layoutInfoProducto = findViewById(R.id.layoutInfoProducto)
-        imgProductoPreview = findViewById(R.id.imgProductoPreview)
-        tvNombreProductoSeleccionado = findViewById(R.id.tvNombreProductoSeleccionado)
+        btnEscanearVenta           = findViewById(R.id.btnEscanearVenta)
+        spinnerCategoriasVenta     = findViewById(R.id.spinnerCategoriasVenta)
+        spinnerProductos           = findViewById(R.id.spinnerProductos)
+        layoutInfoProducto         = findViewById(R.id.layoutInfoProducto)
+        imgProductoPreview         = findViewById(R.id.imgProductoPreview)
+        tvNombreProductoSeleccionado   = findViewById(R.id.tvNombreProductoSeleccionado)
         tvCategoriaProductoSeleccionado = findViewById(R.id.tvCategoriaProductoSeleccionado)
-        tvStockProductoSeleccionado = findViewById(R.id.tvStockProductoSeleccionado)
-        txtPrecioUnitario = findViewById(R.id.txtPrecioUnitario)
+        tvStockProductoSeleccionado    = findViewById(R.id.tvStockProductoSeleccionado)
+        txtPrecioUnitario          = findViewById(R.id.txtPrecioUnitario)
+        btnMenosCantidad           = findViewById(R.id.btnMenosCantidad)
+        txtCantidad                = findViewById(R.id.txtCantidad)
+        btnMasCantidad             = findViewById(R.id.btnMasCantidad)
+        spinnerMetodoPago          = findViewById(R.id.spinnerMetodoPago)
+        txtFechaVenta              = findViewById(R.id.txtFechaVenta)
+        txtSubtotalCalculado       = findViewById(R.id.txtSubtotalCalculado)
+        txtIgvCalculado            = findViewById(R.id.txtIgvCalculado)
+        txtTotalCalculado          = findViewById(R.id.txtTotalCalculado)
+        btnRegistrarVenta          = findViewById(R.id.btnRegistrarVenta)
+        btnHistorialVentas         = findViewById(R.id.btnHistorialVentas)
 
-        btnMenosCantidad = findViewById(R.id.btnMenosCantidad)
-        txtCantidad = findViewById(R.id.txtCantidad)
-        btnMasCantidad = findViewById(R.id.btnMasCantidad)
+        toolbarVentas.setNavigationOnClickListener { finish() }
 
-        spinnerMetodoPago = findViewById(R.id.spinnerMetodoPago)
-        txtFechaVenta = findViewById(R.id.txtFechaVenta)
+        txtFechaVenta.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
 
-        txtSubtotalCalculado = findViewById(R.id.txtSubtotalCalculado)
-        txtIgvCalculado = findViewById(R.id.txtIgvCalculado)
-        txtTotalCalculado = findViewById(R.id.txtTotalCalculado)
-
-        btnRegistrarVenta = findViewById(R.id.btnRegistrarVenta)
-        btnHistorialVentas = findViewById(R.id.btnHistorialVentas)
-
-        toolbarVentas.setNavigationOnClickListener {
-            finish()
-        }
-
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        txtFechaVenta.text = sdf.format(Date())
-
-        // Método de pago: solo Efectivo o Yape (RN-07 del informe)
         spinnerMetodoPago.adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_dropdown_item,
             listOf("Efectivo", "Yape")
         )
 
-        val categoriasAdapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.lista_categorias,
+        spinnerCategoriasVenta.adapter = ArrayAdapter.createFromResource(
+            this, R.array.lista_categorias,
             android.R.layout.simple_spinner_dropdown_item
         )
-        spinnerCategoriasVenta.adapter = categoriasAdapter
 
         layoutInfoProducto.visibility = android.view.View.GONE
+        recalcularTotales()
 
         cargarProductosDesdeFirebase()
 
         spinnerCategoriasVenta.onItemSelectedListener =
-            object : android.widget.AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: android.widget.AdapterView<*>?,
-                    view: android.view.View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    val categoriaSeleccionada = parent?.getItemAtPosition(position).toString()
-                    filtrarProductosPorCategoria(categoriaSeleccionada)
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p: AdapterView<*>?, v: android.view.View?, pos: Int, id: Long) {
+                    filtrarProductosPorCategoria(p?.getItemAtPosition(pos).toString())
                 }
-
-                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
+                override fun onNothingSelected(p: AdapterView<*>?) {}
             }
 
         spinnerProductos.onItemSelectedListener =
-            object : android.widget.AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: android.widget.AdapterView<*>?,
-                    view: android.view.View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (position in productosFiltrados.indices) {
-                        mostrarProductoSeleccionado(productosFiltrados[position])
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p: AdapterView<*>?, v: android.view.View?, pos: Int, id: Long) {
+                    if (pos in productosFiltrados.indices) {
+                        mostrarProductoSeleccionado(productosFiltrados[pos])
                     }
                 }
-
-                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
+                override fun onNothingSelected(p: AdapterView<*>?) {}
             }
 
         btnAbrirCatalogoCategorias.setOnClickListener {
@@ -178,38 +141,29 @@ class registro_ventas : AppCompatActivity() {
 
         btnMenosCantidad.setOnClickListener {
             val actual = txtCantidad.text.toString().toIntOrNull() ?: 1
-            if (actual > 1) {
-                txtCantidad.setText((actual - 1).toString())
-            }
-            recalcularTotales()
+            if (actual > 1) txtCantidad.setText((actual - 1).toString())
         }
 
         btnMasCantidad.setOnClickListener {
             val actual = txtCantidad.text.toString().toIntOrNull() ?: 1
-            val stockDisponible = productoSeleccionado?.cantidad ?: 0
-            if (actual < stockDisponible) {
+            val stock = productoSeleccionado?.cantidad ?: 0
+            if (actual < stock) {
                 txtCantidad.setText((actual + 1).toString())
             } else {
-                Toast.makeText(this, "No hay más stock disponible", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Sin stock disponible", Toast.LENGTH_SHORT).show()
             }
-            recalcularTotales()
         }
 
-        txtCantidad.addTextChangedListener(object : android.text.TextWatcher {
+        txtCantidad.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: android.text.Editable?) {
-                recalcularTotales()
-            }
+            override fun afterTextChanged(s: Editable?) { recalcularTotales() }
         })
 
-        btnRegistrarVenta.setOnClickListener {
-            registrarVenta()
-        }
+        btnRegistrarVenta.setOnClickListener { registrarVenta() }
 
         btnHistorialVentas.setOnClickListener {
-            val intent = Intent(this, historial_ventas::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, historial_ventas::class.java))
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -220,36 +174,30 @@ class registro_ventas : AppCompatActivity() {
     }
 
     private fun cargarProductosDesdeFirebase() {
-        FirebaseDatabase.getInstance()
-            .getReference("productos")
+        FirebaseDatabase.getInstance().getReference("productos")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     listaProductos.clear()
                     for (item in snapshot.children) {
-                        val producto = item.getValue(Producto::class.java)
-                        if (producto != null) {
-                            listaProductos.add(producto)
-                        }
+                        item.getValue(Producto::class.java)?.let { listaProductos.add(it) }
                     }
-                    val categoriaActual =
-                        spinnerCategoriasVenta.selectedItem?.toString() ?: "Bebidas"
-                    filtrarProductosPorCategoria(categoriaActual)
+                    filtrarProductosPorCategoria(
+                        spinnerCategoriasVenta.selectedItem?.toString() ?: ""
+                    )
                 }
-
                 override fun onCancelled(error: DatabaseError) {}
             })
     }
 
     private fun filtrarProductosPorCategoria(categoria: String) {
-        productosFiltrados = listaProductos.filter {
-            it.categoria.equals(categoria, ignoreCase = true)
-        }.toMutableList()
+        productosFiltrados = listaProductos
+            .filter { it.categoria.equals(categoria, ignoreCase = true) }
+            .toMutableList()
 
-        val nombres = productosFiltrados.map { it.nombre }
         spinnerProductos.adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_dropdown_item,
-            nombres
+            productosFiltrados.map { it.nombre }
         )
 
         if (productosFiltrados.isEmpty()) {
@@ -262,40 +210,30 @@ class registro_ventas : AppCompatActivity() {
     private fun seleccionarProductoPorCodigo(codigo: String) {
         val producto = listaProductos.find { it.codigoBarras == codigo }
         if (producto == null) {
-            Toast.makeText(this, "Producto no encontrado para ese código", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Producto no encontrado", Toast.LENGTH_SHORT).show()
             return
         }
-
-        val idxCategoria = (spinnerCategoriasVenta.adapter as? ArrayAdapter<String>)
-            ?.getPosition(producto.categoria) ?: -1
-
-        if (idxCategoria >= 0) {
-            spinnerCategoriasVenta.setSelection(idxCategoria)
-        }
-
         filtrarProductosPorCategoria(producto.categoria)
-
-        val idxProducto = productosFiltrados.indexOfFirst { it.id == producto.id }
-        if (idxProducto >= 0) {
-            spinnerProductos.setSelection(idxProducto)
-            mostrarProductoSeleccionado(producto)
-        }
+        val idx = productosFiltrados.indexOfFirst { it.id == producto.id }
+        if (idx >= 0) spinnerProductos.setSelection(idx)
+        mostrarProductoSeleccionado(producto)
     }
 
     private fun mostrarProductoSeleccionado(producto: Producto) {
         productoSeleccionado = producto
         layoutInfoProducto.visibility = android.view.View.VISIBLE
 
-        tvNombreProductoSeleccionado.text = producto.nombre
+        tvNombreProductoSeleccionado.text    = producto.nombre
         tvCategoriaProductoSeleccionado.text = "Categoría: ${producto.categoria}"
-        tvStockProductoSeleccionado.text = "Stock: ${producto.cantidad}"
-        txtPrecioUnitario.text = "P. Unit: S/ %.2f".format(producto.precioVenta)
+        tvStockProductoSeleccionado.text     = "Stock: ${producto.cantidad}"
+        txtPrecioUnitario.text               = "P. Unit: S/ %.2f".format(producto.precioVenta)
 
         if (producto.imagenBase64.isNotEmpty()) {
             try {
                 val bytes = Base64.decode(producto.imagenBase64, Base64.DEFAULT)
-                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                imgProductoPreview.setImageBitmap(bitmap)
+                imgProductoPreview.setImageBitmap(
+                    BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                )
             } catch (e: Exception) {
                 imgProductoPreview.setImageResource(R.drawable.icono_camara)
             }
@@ -308,21 +246,21 @@ class registro_ventas : AppCompatActivity() {
     }
 
     private fun recalcularTotales() {
-        val precioUnitario = productoSeleccionado?.precioVenta ?: 0.0
-        val cantidad = txtCantidad.text.toString().toIntOrNull() ?: 0
+        val precioVenta = productoSeleccionado?.precioVenta ?: 0.0
+        val cantidad    = txtCantidad.text.toString().toIntOrNull() ?: 0
 
-        val subtotal = precioUnitario * cantidad
-        val igv = subtotal * 0.18
-        val total = subtotal + igv
+        // El precio de venta YA incluye IGV — se extrae, no se agrega
+        val totalConIgv = precioVenta * cantidad
+        val igv         = totalConIgv - (totalConIgv / 1.18)
+        val subtotal    = totalConIgv - igv
 
         txtSubtotalCalculado.text = "S/ %.2f".format(subtotal)
-        txtIgvCalculado.text = "S/ %.2f".format(igv)
-        txtTotalCalculado.text = "S/ %.2f".format(total)
+        txtIgvCalculado.text      = "S/ %.2f".format(igv)
+        txtTotalCalculado.text    = "S/ %.2f".format(totalConIgv)
     }
 
     private fun registrarVenta() {
-        val producto = productoSeleccionado
-        if (producto == null) {
+        val producto = productoSeleccionado ?: run {
             Toast.makeText(this, "Selecciona un producto primero", Toast.LENGTH_SHORT).show()
             return
         }
@@ -335,23 +273,20 @@ class registro_ventas : AppCompatActivity() {
         }
 
         if (cantidad > producto.cantidad) {
-            Toast.makeText(this, "No hay stock suficiente", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Stock insuficiente (disponible: ${producto.cantidad})", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val metodoPago = spinnerMetodoPago.selectedItem?.toString() ?: "Efectivo"
-        val totalTexto = txtTotalCalculado.text.toString()
-            .replace("S/", "")
-            .trim()
-        val total = totalTexto.toDoubleOrNull() ?: 0.0
+        val metodoPago  = spinnerMetodoPago.selectedItem?.toString() ?: "Efectivo"
+        val totalConIgv = (producto.precioVenta * cantidad)
 
         val nuevaVenta = venta(
-            fecha = txtFechaVenta.text.toString(),
-            cantidad = cantidad,
-            metodo = metodoPago,
-            categoria = producto.categoria,
-            total = total,
-            productoId = producto.id
+            fecha       = txtFechaVenta.text.toString(),
+            cantidad    = cantidad,
+            metodo      = metodoPago,
+            categoria   = producto.categoria,
+            total       = totalConIgv,
+            productoId  = producto.id
         )
 
         btnRegistrarVenta.isEnabled = false
@@ -359,17 +294,14 @@ class registro_ventas : AppCompatActivity() {
         VentaRepository.registrar(
             nuevaVenta,
             onExito = { codigoGenerado ->
-                // RN-06: descuenta el stock del producto vendido de forma automática
-                val nuevoStock = producto.cantidad - cantidad
                 FirebaseDatabase.getInstance()
                     .getReference("productos")
                     .child(producto.id)
                     .child("cantidad")
-                    .setValue(nuevoStock)
+                    .setValue(producto.cantidad - cantidad)
 
                 tvCodigoGenerado.text = "Código: $codigoGenerado"
-                Toast.makeText(this, "Venta registrada ✓", Toast.LENGTH_SHORT).show()
-
+                Toast.makeText(this, "Venta $codigoGenerado registrada ✓", Toast.LENGTH_SHORT).show()
                 btnRegistrarVenta.isEnabled = true
                 limpiarFormulario()
             },

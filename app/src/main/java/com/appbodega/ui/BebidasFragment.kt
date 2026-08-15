@@ -21,26 +21,37 @@ class BebidasFragment : Fragment(R.layout.fragment_bebidas) {
 
     private lateinit var recyclerProductos: RecyclerView
     private lateinit var adapter: ProductoAdapter
-
     private lateinit var btnBack: ImageButton
     private lateinit var etBuscar: TextInputEditText
-
     private val listaProductos = mutableListOf<Producto>()
 
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?
-    ) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        btnBack = view.findViewById(R.id.btnBack)
+        btnBack           = view.findViewById(R.id.btnBack)
         recyclerProductos = view.findViewById(R.id.rvProductos)
-        etBuscar = view.findViewById(R.id.etBuscar)
+        etBuscar          = view.findViewById(R.id.etBuscar)
+
         adapter = ProductoAdapter(
             listaProductos,
             { producto ->
-                val fragment = EditarProductoFragment.newInstance(producto)
-                parentFragmentManager.beginTransaction()
+                val fragment = DetalleProductoFragment()
+                val bundle = Bundle()
+                bundle.putString("productoId", producto.id)
+                fragment.arguments = bundle
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.flayContenedor, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            },
+            { producto ->
+                val fragment = EditarProductoFragment()
+                val bundle = Bundle()
+                bundle.putSerializable("producto", producto)
+                fragment.arguments = bundle
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
                     .replace(R.id.flayContenedor, fragment)
                     .addToBackStack(null)
                     .commit()
@@ -49,65 +60,37 @@ class BebidasFragment : Fragment(R.layout.fragment_bebidas) {
                 eliminarProducto(producto.id)
             }
         )
-        recyclerProductos.layoutManager =
-            LinearLayoutManager(requireContext())
 
+        recyclerProductos.layoutManager = LinearLayoutManager(requireContext())
         recyclerProductos.adapter = adapter
 
         cargarProductos()
 
         etBuscar.addTextChangedListener { texto ->
-
             val filtrados = listaProductos.filter {
-
-                it.nombre.contains(
-                    texto.toString(),
-                    ignoreCase = true
-                )
+                it.nombre.contains(texto.toString(), ignoreCase = true)
             }
-
             adapter.actualizar(filtrados)
         }
 
-        btnBack.setOnClickListener {
-            parentFragmentManager.popBackStack()
-        }
+        btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
     }
 
     private fun cargarProductos() {
-
         FirebaseDatabase.getInstance()
             .getReference("productos")
             .addValueEventListener(object : ValueEventListener {
-
-                override fun onDataChange(
-                    snapshot: DataSnapshot
-                ) {
-
+                override fun onDataChange(snapshot: DataSnapshot) {
                     listaProductos.clear()
-
                     for (item in snapshot.children) {
-
-                        val producto =
-                            item.getValue(
-                                Producto::class.java
-                            )
-
-                        if (
-                            producto != null &&
-                            producto.categoria == "Bebidas"
-                        ) {
+                        val producto = item.getValue(Producto::class.java)
+                        if (producto != null && producto.categoria == "Bebidas") {
                             listaProductos.add(producto)
                         }
                     }
-
                     adapter.actualizar(listaProductos)
                 }
-
-                override fun onCancelled(
-                    error: DatabaseError
-                ) {
-                }
+                override fun onCancelled(error: DatabaseError) {}
             })
     }
 
@@ -117,37 +100,10 @@ class BebidasFragment : Fragment(R.layout.fragment_bebidas) {
             .child(idProducto)
             .removeValue()
             .addOnSuccessListener {
-                Toast.makeText(
-                    requireContext(),
-                    "Producto eliminado",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(requireContext(), "Producto eliminado", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(
-                    requireContext(),
-                    e.message,
-                    Toast.LENGTH_LONG
-                ).show()
+                Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
             }
     }
-
-    private fun actualizarProducto(producto: Producto) {
-
-        FirebaseDatabase.getInstance()
-            .getReference("productos")
-            .child(producto.id)
-            .setValue(producto)
-            .addOnSuccessListener {
-
-                Toast.makeText(
-                    requireContext(),
-                    "Producto actualizado",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                parentFragmentManager.popBackStack()
-            }
-    }
-
 }
