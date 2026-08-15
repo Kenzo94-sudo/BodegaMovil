@@ -13,6 +13,7 @@ import com.appbodega.repository.VentaRepository
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
 import java.util.*
@@ -51,8 +52,7 @@ class historial_ventas : AppCompatActivity() {
         chipGroup        = findViewById(R.id.chipGroupCategorias)
 
         adapter = VentaAdapter(emptyList()) { venta ->
-            Toast.makeText(this, "Detalle: ${venta.codigo}", Toast.LENGTH_SHORT).show()
-            // TODO: abrir dialog boleta
+            mostrarBoleta(venta)
         }
         rvHistorial.layoutManager = LinearLayoutManager(this)
         rvHistorial.adapter = adapter
@@ -75,6 +75,23 @@ class historial_ventas : AppCompatActivity() {
         btnAtras.setOnClickListener {
             startActivity(Intent(this, registro_ventas::class.java))
         }
+    }
+
+    private fun mostrarBoleta(venta: venta) {
+        val mensaje = """
+        Fecha: ${venta.fecha}
+        Categoría: ${venta.categoria}
+        Cantidad: ${venta.cantidad}
+        Método de pago: ${venta.metodo}
+
+        Total: S/ %.2f
+    """.trimIndent().format(venta.total)
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Boleta ${venta.codigo}")
+            .setMessage(mensaje)
+            .setPositiveButton("Cerrar", null)
+            .show()
     }
 
     private fun cargarDesdeFirebase() {
@@ -105,6 +122,8 @@ class historial_ventas : AppCompatActivity() {
         if (categoriaSeleccionada != "Todas")
             resultado = resultado.filter { it.categoria == categoriaSeleccionada }
 
+        resultado = filtrarPorFecha(resultado)
+
         tvTotalFiltrado.text = "S/ %.2f".format(resultado.sumOf { it.total })
 
         if (resultado.isEmpty()) {
@@ -116,6 +135,21 @@ class historial_ventas : AppCompatActivity() {
         }
 
         adapter.actualizar(resultado)
+    }
+
+    private fun filtrarPorFecha(lista: List<venta>): List<venta> {
+        val desdeTxt = tvDesde.text.toString()
+        val hastaTxt = tvHasta.text.toString()
+        if (desdeTxt.isEmpty() || hastaTxt.isEmpty()) return lista
+
+        val fmt = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val desde = fmt.parse(desdeTxt) ?: return lista
+        val hasta = fmt.parse(hastaTxt) ?: return lista
+
+        return lista.filter { venta ->
+            val fechaVenta = fmt.parse(venta.fecha) ?: return@filter true
+            !fechaVenta.before(desde) && !fechaVenta.after(hasta)
+        }
     }
 
     private fun configurarChips() {
@@ -144,6 +178,7 @@ class historial_ventas : AppCompatActivity() {
         DatePickerDialog(this, { _, y, m, d ->
             tv.text = "%02d/%02d/%04d".format(d, m + 1, y)
             validarFechas()
+            aplicarFiltros()
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
     }
 
